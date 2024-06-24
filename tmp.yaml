@@ -1,0 +1,105 @@
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-github
+spec:
+  package: xpkg.upbound.io/coopnorge/provider-github:v0.10.0
+---
+apiVersion: github.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: default
+spec:
+  credentials:
+    secretRef:
+      key: credentials
+      name: github
+      namespace: crossplane-system
+    source: Secret
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: Repository
+metadata:
+  name: crossplane-github-demo
+spec:
+  forProvider:
+    name: crossplane-github-demo
+    visibility: public
+    hasIssues: true
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: Branch
+metadata:
+  name: crossplane-github-demo-init
+spec:
+  forProvider:
+    branch: init
+    repositoryRef:
+      name: crossplane-github-demo
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: RepositoryFile
+metadata:
+  name: crossplane-github-demo-main-go
+spec:
+  forProvider:
+    commitAuthor: Crossplane
+    commitEmail: github-provider@crossplane.io
+    commitMessage: "Crossplane rocks"
+    content: |
+      package main
+      import "fmt"
+      func main() {
+          fmt.Println("hello world")
+      }
+    file: main.go
+    repositoryRef:
+      name: crossplane-github-demo
+    branch: init
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: RepositoryFile
+metadata:
+  name: crossplane-github-demo-dockerfile
+spec:
+  forProvider:
+    commitAuthor: Crossplane
+    commitEmail: github-provider@crossplane.io
+    commitMessage: "Crossplane rocks"
+    content: |
+      FROM golang:1.22.2-alpine AS build
+      RUN mkdir /src
+      WORKDIR /src
+      ADD ./*.go .
+      RUN GOOS=linux GOARCH=amd64 go build -o app
+      RUN chmod +x app
+
+      FROM scratch
+      COPY --from=build /src/app /usr/local/bin/app
+      EXPOSE 8080
+      CMD ["app"]
+    file: Dockerfile
+    repositoryRef:
+      name: crossplane-github-demo
+    branch: init
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: PullRequest
+metadata:
+  name: crossplane-github-demo
+spec:
+  forProvider:
+    baseRef: main
+    headRef: init
+    body: Review, approve or modify, merge, enjoy.
+    title: "Initial"
+    maintainerCanModify: true
+    baseRepositoryRef:
+      name: crossplane-github-demo
+
+# FIXME: RepositoryFile: .github/workflows/ci.yaml
+# FIXME: RepositoryFile: .gitignore
+# FIXME: RepositoryFile: sqlclaim.yaml
+# FIXME: RepositoryFile: appclaim.yaml
+# FIXME: ArgoCD Application

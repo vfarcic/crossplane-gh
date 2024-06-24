@@ -1,0 +1,36 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: github
+spec:
+  compositeTypeRef:
+    apiVersion: devopstoolkitseries.com/v1alpha1
+    kind: CompositeCluster
+  mode: Pipeline
+  pipeline:
+  - step: github
+    functionRef:
+      name: crossplane-contrib-function-kcl
+    input:
+      apiVersion: krm.kcl.dev/v1alpha1
+      kind: KCLRun
+      spec:
+        source: |
+          oxr = option("params").oxr
+          ocds = option("params").ocds
+
+          _metadata = lambda suffix: str -> any {
+              {
+                  name = oxr.spec.id
+                  annotations = {
+                      "crossplane.io/external-name" = oxr.spec.id
+                      "krm.kcl.dev/composition-resource-name" = oxr.spec.id + "-" + suffix
+                  }
+              }
+          }
+
+          items = []
+  - step: automatically-detect-ready-composed-resources
+    functionRef:
+      name: crossplane-contrib-function-auto-ready
+  writeConnectionSecretsToNamespace: crossplane-system

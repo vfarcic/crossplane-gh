@@ -1,0 +1,20 @@
+apiVersion: meta.pkg.crossplane.io/v1
+kind: Configuration
+metadata:
+  name: dot-github
+  annotations:
+    meta.crossplane.io/maintainer: Viktor Farcic (@vfarcic)
+    meta.crossplane.io/source: github.com/vfarcic/crossplane-kubernetes
+    meta.crossplane.io/license: MIT
+    meta.crossplane.io/description: Generation of GitHub repositories
+    meta.crossplane.io/readme: Generation of GitHub repositories
+spec:
+  crossplane:
+    version: '>=v1.14.0'
+  dependsOn:
+  - provider: xpkg.upbound.io/coopnorge/provider-github
+    version: '>=v0.10.0'
+  - function: xpkg.upbound.io/crossplane-contrib/function-auto-ready
+    version: '>=v0.2.1'
+  - function: xpkg.upbound.io/crossplane-contrib/function-kcl
+    version: '>=v0.7.2'

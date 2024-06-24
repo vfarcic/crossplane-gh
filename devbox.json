@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.11.1/.schema/devbox.schema.json",
+  "packages": [
+    "kind@0.23.0",
+    "kubernetes-helm@3.15.2",
+    "teller@1.5.6",
+    "just@1.29.1",
+    "kcl-cli@0.8.9"
+  ],
+  "shell": {
+    "init_hook": [],
+    "scripts": {
+      "cluster-create":  ["just cluster-create"],
+      "cluster-destroy": ["just cluster-destroy"],
+      "package-publish": ["just package-publish"],
+      "test":            ["just test"],
+      "test-watch":      ["just test-watch"]
+    }
+  }
+}
