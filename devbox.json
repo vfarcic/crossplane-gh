@@ -5,7 +5,9 @@
     "kubernetes-helm@3.15.2",
     "teller@1.5.6",
     "just@1.29.1",
-    "kcl-cli@0.8.9"
+    "kcl-cli@0.8.9",
+    "watchexec@2.1.1",
+    "kyverno-chainsaw@0.2.3"
   ],
   "shell": {
     "init_hook": [],

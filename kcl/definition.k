@@ -16,8 +16,44 @@ spec = {
             openAPIV3Schema = {
                 type = "object"
                 properties = {
-                    # FIXME: Rewrite
-                    spec = {}
+                    spec = {
+                        type = "object"
+                        properties = {
+                            id = {
+                                type = "string"
+                                description = "The unique ID (name) of the GitHub repository."
+                            }
+                            parameters = {
+                                type = "object"
+                                properties = {
+                                    public = {
+                                        type = "boolean"
+                                        description = "Whether to make the repo public."
+                                        default = False
+                                    }
+                                    app = {
+                                        type = "object"
+                                        properties = {
+                                            language = {
+                                                type = "string"
+                                                description = "The language. Currently supported languages: go, js."
+                                                default = "go"
+                                            }
+                                            host = {
+                                                type = "string"
+                                                description = "The host."
+                                            }
+                                            namespace = {
+                                                type = "string"
+                                                description = "The Namespace."
+                                            }
+                                        }
+                                        required = ["host", "namespace"]
+                                    }
+                                }
+                            }
+                        }
+                    }
                     # FIXME: Rewrite
                     status = {}
                 }

@@ -1,0 +1,24 @@
+apiVersion: chainsaw.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: github
+spec:
+  template: true
+  steps:
+    - try:
+        - assert:
+            file: provider-assert.yaml
+        - apply:
+            file: install.yaml
+        - assert:
+            file: assert.yaml
+        - patch:
+            file: js.yaml
+        - assert:
+            file: js-assert.yaml
+      catch:
+        - get:
+            resource: managed
+        # - describe:
+        #     resource: githubs.devopstoolkitseries.com
+        #     selector: crossplane.io/claim-namespace=$NAMESPACE

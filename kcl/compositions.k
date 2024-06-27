@@ -10,7 +10,7 @@ schema composition:
     spec = {
         compositeTypeRef = {
             apiVersion = "devopstoolkitseries.com/v1alpha1"
-            kind = "CompositeCluster"
+            kind = "GitHub"
         }
         mode = "Pipeline"
         pipeline = [

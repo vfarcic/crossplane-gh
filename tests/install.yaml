@@ -1,0 +1,12 @@
+apiVersion: devopstoolkitseries.com/v1alpha1
+kind: GitHubClaim
+metadata:
+  name: my-repo
+spec:
+  id: my-repo
+  parameters:
+    public: true
+    app:
+      language: go
+      host: my-repo.acme.com
+      namespace: a-team

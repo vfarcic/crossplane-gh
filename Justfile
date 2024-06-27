@@ -18,10 +18,10 @@ package-apply:
 # Builds and pushes the package.
 package-publish: package-generate
   up login --token $UP_TOKEN
-  up xpkg build --package-root package --name kubernetes.xpkg
-  up xpkg push --package package/kubernetes.xpkg xpkg.upbound.io/$UP_ACCOUNT/dot-kubernetes:$VERSION
-  rm package/kubernetes.xpkg
-  yq --inplace ".spec.package = \"xpkg.upbound.io/devops-toolkit/dot-kubernetes:$VERSION\"" config.yaml
+  up xpkg build --package-root package --name github.xpkg
+  up xpkg push --package package/github.xpkg xpkg.upbound.io/$UP_ACCOUNT/dot-github:$VERSION
+  rm package/github.xpkg
+  yq --inplace ".spec.package = \"xpkg.upbound.io/devops-toolkit/dot-github:$VERSION\"" config.yaml
 
 # Combines `package-generate` and `package-apply`.
 package-generate-apply: package-generate package-apply

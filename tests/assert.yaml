@@ -1,0 +1,192 @@
+---
+apiVersion: devopstoolkitseries.com/v1alpha1
+kind: GitHubClaim
+metadata:
+  name: my-repo
+  namespace: ($namespace)
+spec:
+  compositionRef:
+    name: github
+  id: my-repo
+  parameters:
+    public: true
+    app:
+      language: go
+      host: my-repo.acme.com
+  resourceRef:
+    apiVersion: devopstoolkitseries.com/v1alpha1
+    kind: GitHub
+---
+apiVersion: devopstoolkitseries.com/v1alpha1
+kind: GitHub
+metadata:
+  generateName: my-repo-
+  labels:
+    crossplane.io/claim-name: my-repo
+    crossplane.io/claim-namespace: ($namespace)
+spec:
+  claimRef:
+    apiVersion: devopstoolkitseries.com/v1alpha1
+    kind: GitHubClaim
+    name: my-repo
+    namespace: ($namespace)
+  compositionRef:
+    name: github
+  id: my-repo
+  parameters:
+    public: true
+    app:
+      language: go
+      host: my-repo.acme.com
+  resourceRefs:
+  - apiVersion: repo.github.upbound.io/v1alpha1
+    kind: Branch
+    name: my-repo-init
+  - apiVersion: repo.github.upbound.io/v1alpha1
+    kind: PullRequest
+    name: my-repo-init
+  - apiVersion: repo.github.upbound.io/v1alpha1
+    kind: RepositoryFile
+    name: my-repo-app
+  - apiVersion: repo.github.upbound.io/v1alpha1
+    kind: RepositoryFile
+    name: my-repo-dockerfile
+  - apiVersion: repo.github.upbound.io/v1alpha1
+    kind: RepositoryFile
+    name: my-repo-gitignore
+  - apiVersion: repo.github.upbound.io/v1alpha1
+    kind: RepositoryFile
+    name: my-repo-main-go
+  - apiVersion: repo.github.upbound.io/v1alpha1
+    kind: Repository
+    name: my-repo
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: Repository
+metadata:
+  name: my-repo
+spec:
+  forProvider:
+    name: my-repo
+    visibility: public
+    hasIssues: true
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: Branch
+metadata:
+  name: my-repo-init
+spec:
+  forProvider:
+    branch: init
+    repositorySelector:
+      matchControllerRef: true
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: RepositoryFile
+metadata:
+  name: my-repo-main-go
+spec:
+  forProvider:
+    commitAuthor: Crossplane
+    commitEmail: github-provider@crossplane.io
+    commitMessage: "Crossplane rocks"
+    content: |
+      package main
+      import "fmt"
+      func main() {
+          fmt.Println("hello world")
+      }
+    file: main.go
+    repositorySelector:
+      matchControllerRef: true
+    branchSelector:
+      matchControllerRef: true
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: RepositoryFile
+metadata:
+  name: my-repo-dockerfile
+spec:
+  forProvider:
+    commitAuthor: Crossplane
+    commitEmail: github-provider@crossplane.io
+    commitMessage: "Crossplane rocks"
+    content: |
+      FROM golang:1.22.2-alpine AS build
+      RUN mkdir /src
+      WORKDIR /src
+      ADD ./*.go .
+      RUN GOOS=linux GOARCH=amd64 go build -o app
+      RUN chmod +x app
+
+      FROM scratch
+      COPY --from=build /src/app /usr/local/bin/app
+      EXPOSE 8080
+      CMD ["app"]
+    file: Dockerfile
+    repositorySelector:
+      matchControllerRef: true
+    branchSelector:
+      matchControllerRef: true
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: RepositoryFile
+metadata:
+  name: my-repo-gitignore
+spec:
+  forProvider:
+    commitAuthor: Crossplane
+    commitEmail: github-provider@crossplane.io
+    commitMessage: "Crossplane rocks"
+    content: |
+      /tmp
+    file: .gitignore
+    repositorySelector:
+      matchControllerRef: true
+    branchSelector:
+      matchControllerRef: true
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: RepositoryFile
+metadata:
+  name: my-repo-app
+spec:
+  forProvider:
+    commitAuthor: Crossplane
+    commitEmail: github-provider@crossplane.io
+    commitMessage: "Crossplane rocks"
+    content: |
+      apiVersion: devopstoolkitseries.com/v1alpha1
+      kind: AppClaim
+      metadata:
+        name: my-repo
+      spec:
+        id: my-repo
+        compositionSelector:
+          matchLabels:
+            type: backend
+            location: local
+        parameters:
+          namespace: a-team
+          image: ttl.sh/my-repo
+          port: 8080
+          host: my-repo.acme.com
+    file: k8s/appclaim.yaml
+    repositorySelector:
+      matchControllerRef: true
+    branchSelector:
+      matchControllerRef: true
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: PullRequest
+metadata:
+  name: my-repo-init
+spec:
+  forProvider:
+    baseRef: main
+    headRef: init
+    body: Review, approve or modify, merge, enjoy.
+    title: "Initial"
+    maintainerCanModify: true
+    baseRepositorySelector:
+      matchControllerRef: true

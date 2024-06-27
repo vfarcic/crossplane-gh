@@ -5,7 +5,7 @@ metadata:
 spec:
   compositeTypeRef:
     apiVersion: devopstoolkitseries.com/v1alpha1
-    kind: CompositeCluster
+    kind: GitHub
   mode: Pipeline
   pipeline:
   - step: github
@@ -15,21 +15,154 @@ spec:
       apiVersion: krm.kcl.dev/v1alpha1
       kind: KCLRun
       spec:
-        source: |
+        source: |-
           oxr = option("params").oxr
-          ocds = option("params").ocds
 
-          _metadata = lambda suffix: str -> any {
+          _metadata = lambda suffix: str, kind: str -> any {
               {
-                  name = oxr.spec.id
+                  if suffix == "":
+                      name = oxr.spec.id
+                  else:
+                      name = oxr.spec.id + "-" + suffix
                   annotations = {
-                      "crossplane.io/external-name" = oxr.spec.id
-                      "krm.kcl.dev/composition-resource-name" = oxr.spec.id + "-" + suffix
+                      "krm.kcl.dev/composition-resource-name" = oxr.spec.id + "-" + kind + "-" + suffix
                   }
               }
           }
 
-          items = []
+          schema repositoryFile:
+              _name: str
+              _file: str
+              _content: str
+              apiVersion = "repo.github.upbound.io/v1alpha1"
+              kind = "RepositoryFile"
+              metadata = _metadata(_name, "file")
+              spec = {
+                  forProvider = {
+                      commitAuthor = "Crossplane"
+                      commitEmail = "github-provider@crossplane.io"
+                      commitMessage = "Crossplane rocks"
+                      content = _content
+                      file = _file
+                      repositorySelector.matchControllerRef = True
+                      branchSelector.matchControllerRef = True
+                  }
+              }
+
+          items = [
+              {
+                  apiVersion = "repo.github.upbound.io/v1alpha1"
+                  kind = "Repository"
+                  metadata = _metadata("", "repo")
+                  spec.forProvider = {
+                      name = oxr.spec.id
+                      if oxr.spec.parameters.public:
+                          visibility = "public"
+                      else:
+                          visibility = "private"
+                      hasIssues = True
+                  }
+              }
+              {
+                  apiVersion = "repo.github.upbound.io/v1alpha1"
+                  kind = "Branch"
+                  metadata = _metadata("init", "branch")
+                  spec.forProvider = {
+                      branch = "init"
+                      repositorySelector.matchControllerRef = True
+                  }
+              }
+              {
+                  apiVersion = "repo.github.upbound.io/v1alpha1"
+                  kind = "PullRequest"
+                  metadata = _metadata("init", "pr")
+                  spec.forProvider = {
+                      baseRef = "main"
+                      headRef = "init"
+                      body = "Review, approve or modify, merge, enjoy."
+                      title = "Initial"
+                      maintainerCanModify = True
+                      baseRepositorySelector.matchControllerRef = True
+                  }
+              }
+              repositoryFile {
+                  _name = "gitignore"
+                  _file = ".gitignore"
+                  _content = """\
+          /tmp
+          """
+              }
+              repositoryFile {
+                  _name = "app"
+                  _file = "k8s/appclaim.yaml"
+                  _content = """\
+          apiVersion: devopstoolkitseries.com/v1alpha1
+          kind: AppClaim
+          metadata:
+            name: """ + oxr.spec.id + """
+          spec:
+            id: """ + oxr.spec.id + """
+            compositionSelector:
+              matchLabels:
+                type: backend
+                location: local
+            parameters:
+              namespace: """ + oxr.spec.parameters.app.namespace +"""
+              image: ttl.sh/""" + oxr.spec.id + """
+              port: 8080
+              host: """ + oxr.spec.parameters.app.host + """
+          """
+              }
+              if oxr.spec.parameters.app.language == "go":
+                  repositoryFile {
+                      _name = "main-go"
+                      _file = "main.go"
+                      _content = """\
+          package main
+          import "fmt"
+          func main() {
+              fmt.Println("hello world")
+          }
+          """
+                  }
+                  repositoryFile {
+                      _name = "dockerfile"
+                      _file = "Dockerfile"
+                      _content = """\
+          FROM golang:1.22.2-alpine AS build
+          RUN mkdir /src
+          WORKDIR /src
+          ADD ./*.go .
+          RUN GOOS=linux GOARCH=amd64 go build -o app
+          RUN chmod +x app
+
+          FROM scratch
+          COPY --from=build /src/app /usr/local/bin/app
+          EXPOSE 8080
+          CMD ["app"]
+          """
+                  }
+              if oxr.spec.parameters.app.language == "js":
+                  repositoryFile {
+                      _name = "main-js"
+                      _file = "main.js"
+                      _content = """\
+          console.log('Hello World');
+          """
+                  }
+                  repositoryFile {
+                      _name = "dockerfile"
+                      _file = "Dockerfile"
+                      _content = """\
+          FROM scratch
+          RUN echo "I haven't used JS for a while so you'll need to find someone else to write this Dockerfile for you."
+          """
+                  }
+          ]
+
+          # FIXME: RepositoryFile: sqlclaim.yaml
+          # FIXME: ArgoCD Application
+          # FIXME: RepositoryFile: .github/workflows/ci.yaml
   - step: automatically-detect-ready-composed-resources
     functionRef:
       name: crossplane-contrib-function-auto-ready

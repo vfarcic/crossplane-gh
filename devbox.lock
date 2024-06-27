@@ -229,6 +229,54 @@
         }
       }
     },
+    "kyverno-chainsaw@0.2.3": {
+      "last_modified": "2024-06-12T20:55:33Z",
+      "resolved": "github:NixOS/nixpkgs/a9858885e197f984d92d7fe64e9fff6b2e488d40#kyverno-chainsaw",
+      "source": "devbox-search",
+      "version": "0.2.3",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/kfq3cnk264nfx26s99d0ps6szpp98985-kyverno-chainsaw-0.2.3",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/kfq3cnk264nfx26s99d0ps6szpp98985-kyverno-chainsaw-0.2.3"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/cgismmzrmnr2ls8nadq2pnx6yb90amk2-kyverno-chainsaw-0.2.3",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/cgismmzrmnr2ls8nadq2pnx6yb90amk2-kyverno-chainsaw-0.2.3"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/sij31z5g617p7mhyi9rimj7jdhjzircy-kyverno-chainsaw-0.2.3",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/sij31z5g617p7mhyi9rimj7jdhjzircy-kyverno-chainsaw-0.2.3"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/p0h1mc9d5anw28rihmqnqgv4djswm9iz-kyverno-chainsaw-0.2.3",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/p0h1mc9d5anw28rihmqnqgv4djswm9iz-kyverno-chainsaw-0.2.3"
+        }
+      }
+    },
     "teller@1.5.6": {
       "last_modified": "2024-05-22T06:18:38Z",
       "resolved": "github:NixOS/nixpkgs/3f316d2a50699a78afe5e77ca486ad553169061e#teller",
@@ -274,6 +322,54 @@
             }
           ],
           "store_path": "/nix/store/2r6xiywzp38nbw6vay8r4y6fy2wn2d27-teller-1.5.6"
+        }
+      }
+    },
+    "watchexec@2.1.1": {
+      "last_modified": "2024-06-12T20:55:33Z",
+      "resolved": "github:NixOS/nixpkgs/a9858885e197f984d92d7fe64e9fff6b2e488d40#watchexec",
+      "source": "devbox-search",
+      "version": "2.1.1",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/b5yjxgi1pylgpc75cvafb6q1azvk8dqs-watchexec-2.1.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/b5yjxgi1pylgpc75cvafb6q1azvk8dqs-watchexec-2.1.1"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/hj5khkbizjdcbx9a1lh15ffw2vws7nlf-watchexec-2.1.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/hj5khkbizjdcbx9a1lh15ffw2vws7nlf-watchexec-2.1.1"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/8rnzdhcca8ijqnjwm4fnwi7mfn82c6i5-watchexec-2.1.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/8rnzdhcca8ijqnjwm4fnwi7mfn82c6i5-watchexec-2.1.1"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/wn26mwskqy2rar2c6f2x40vwc51s98py-watchexec-2.1.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/wn26mwskqy2rar2c6f2x40vwc51s98py-watchexec-2.1.1"
         }
       }
     }

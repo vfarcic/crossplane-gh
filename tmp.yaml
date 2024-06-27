@@ -97,9 +97,3 @@ spec:
     maintainerCanModify: true
     baseRepositoryRef:
       name: crossplane-github-demo
-
-# FIXME: RepositoryFile: .github/workflows/ci.yaml
-# FIXME: RepositoryFile: .gitignore
-# FIXME: RepositoryFile: sqlclaim.yaml
-# FIXME: RepositoryFile: appclaim.yaml
-# FIXME: ArgoCD Application
