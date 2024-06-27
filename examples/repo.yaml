@@ -1,12 +1,13 @@
+---
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: GitHubClaim
 metadata:
-  name: my-repo
+  name: crossplane-gh-demo
 spec:
-  id: my-repo
+  id: crossplane-gh-demo
   parameters:
     public: true
-    registry: my-registry/me
+    registry: ttl.sh
     app:
       language: go
       host: my-repo.acme.com

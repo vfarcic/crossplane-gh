@@ -6,3 +6,7 @@ providers:
         path: projects/vfarcic/secrets/upbound-account/versions/1
       UP_TOKEN:
         path: projects/vfarcic/secrets/upbound-token/versions/1
+      GITHUB_TOKEN:
+        path: projects/vfarcic/secrets/github-token/versions/4
+      GITHUB_OWNER:
+        path: projects/vfarcic/secrets/github-user/versions/1

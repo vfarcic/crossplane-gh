@@ -16,9 +16,9 @@ spec:
             file: js.yaml
         - assert:
             file: js-assert.yaml
-      catch:
-        - get:
-            resource: managed
-        # - describe:
-        #     resource: githubs.devopstoolkitseries.com
-        #     selector: crossplane.io/claim-namespace=$NAMESPACE
+    #   catch:
+    #     - get:
+    #         resource: managed
+    #     - describe:
+    #         resource: githubs.devopstoolkitseries.com
+    #         selector: crossplane.io/claim-namespace=$NAMESPACE

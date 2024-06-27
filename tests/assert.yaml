@@ -10,6 +10,7 @@ spec:
   id: my-repo
   parameters:
     public: true
+    registry: my-registry/me
     app:
       language: go
       host: my-repo.acme.com
@@ -35,6 +36,7 @@ spec:
   id: my-repo
   parameters:
     public: true
+    registry: my-registry/me
     app:
       language: go
       host: my-repo.acme.com
@@ -50,10 +52,16 @@ spec:
     name: my-repo-app
   - apiVersion: repo.github.upbound.io/v1alpha1
     kind: RepositoryFile
-    name: my-repo-dockerfile
+    name: my-repo-ci
+  - apiVersion: repo.github.upbound.io/v1alpha1
+    kind: RepositoryFile
+    name: my-repo-earthfile
   - apiVersion: repo.github.upbound.io/v1alpha1
     kind: RepositoryFile
     name: my-repo-gitignore
+  - apiVersion: repo.github.upbound.io/v1alpha1
+    kind: RepositoryFile
+    name: my-repo-go-mod
   - apiVersion: repo.github.upbound.io/v1alpha1
     kind: RepositoryFile
     name: my-repo-main-go
@@ -99,35 +107,71 @@ spec:
     file: main.go
     repositorySelector:
       matchControllerRef: true
-    branchSelector:
-      matchControllerRef: true
+    branch: init
 ---
 apiVersion: repo.github.upbound.io/v1alpha1
 kind: RepositoryFile
 metadata:
-  name: my-repo-dockerfile
+  name: my-repo-go-mod
 spec:
   forProvider:
     commitAuthor: Crossplane
     commitEmail: github-provider@crossplane.io
     commitMessage: "Crossplane rocks"
     content: |
-      FROM golang:1.22.2-alpine AS build
-      RUN mkdir /src
-      WORKDIR /src
-      ADD ./*.go .
-      RUN GOOS=linux GOARCH=amd64 go build -o app
-      RUN chmod +x app
+      module app
 
-      FROM scratch
-      COPY --from=build /src/app /usr/local/bin/app
-      EXPOSE 8080
-      CMD ["app"]
-    file: Dockerfile
+      go 1.21.5
+    file: go.mod
     repositorySelector:
       matchControllerRef: true
-    branchSelector:
+    branch: init
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: RepositoryFile
+metadata:
+  name: my-repo-earthfile
+spec:
+  forProvider:
+    commitAuthor: Crossplane
+    commitEmail: github-provider@crossplane.io
+    commitMessage: "Crossplane rocks"
+    content: |
+      VERSION 0.8
+      FROM ghcr.io/vfarcic/silly-demo-earthly:0.0.5
+      ARG --global registry=my-registry/me
+      ARG --global image=my-repo
+      WORKDIR /go-workdir
+
+      binary:
+          COPY go.mod .
+          COPY *.go .
+          RUN GOOS=linux GOARCH=amd64 go build -o app
+          SAVE ARTIFACT app
+
+      image:
+          BUILD +binary
+          ARG tag='latest'
+          FROM scratch
+          EXPOSE 8080
+          CMD ["app"]
+          ENV VERSION=$tag
+          COPY +binary/app /usr/local/bin/app
+          SAVE IMAGE --push $registry/$image:$tag $registry/$image:latest
+
+      manifests:
+          RUN yq --inplace ".spec.parameters.image = \"$registry/$image:$tag\"" k8s/appclaim.yaml
+
+      all:
+          ARG tag
+          WAIT
+              BUILD +image --tag $tag
+          END
+          BUILD +manifests --tag $tag
+    file: Earthfile
+    repositorySelector:
       matchControllerRef: true
+    branch: init
 ---
 apiVersion: repo.github.upbound.io/v1alpha1
 kind: RepositoryFile
@@ -142,8 +186,6 @@ spec:
       /tmp
     file: .gitignore
     repositorySelector:
-      matchControllerRef: true
-    branchSelector:
       matchControllerRef: true
 ---
 apiVersion: repo.github.upbound.io/v1alpha1
@@ -168,14 +210,62 @@ spec:
             location: local
         parameters:
           namespace: a-team
-          image: ttl.sh/my-repo
+          image: my-registry/me/my-repo
           port: 8080
           host: my-repo.acme.com
     file: k8s/appclaim.yaml
     repositorySelector:
       matchControllerRef: true
-    branchSelector:
+    branch: init
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: RepositoryFile
+metadata:
+  name: my-repo-ci
+spec:
+  forProvider:
+    commitAuthor: Crossplane
+    commitEmail: github-provider@crossplane.io
+    commitMessage: "Crossplane rocks"
+    content: |
+      name: ci
+      run-name: ci
+      on:
+        push:
+          branches:
+            - main
+      jobs:
+        build-container-image:
+          runs-on: ubuntu-latest
+          env:
+            TAG: 0.0.${{ github.run_number }}
+            FORCE_COLOR: 1
+          steps:
+            - uses: earthly/actions-setup@v1
+              with:
+                version: v0.8.0
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v3
+            - name: Build and push
+              run: |
+                earthly --push +all --tag $TAG
+            - name: Commit changes
+              run: |
+                git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                git config --local user.name "github-actions[bot]"
+                git add .
+                git commit -m "Release ${{ env.TAG }} [skip ci]"
+            - name: Push changes
+              uses: ad-m/github-push-action@master
+              with:
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                branch: ${{ github.ref }}
+    file: .github/workflows/ci.yaml
+    repositorySelector:
       matchControllerRef: true
+    branch: init
 ---
 apiVersion: repo.github.upbound.io/v1alpha1
 kind: PullRequest

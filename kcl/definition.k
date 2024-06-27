@@ -31,6 +31,10 @@ spec = {
                                         description = "Whether to make the repo public."
                                         default = False
                                     }
+                                    registry = {
+                                        type = "string"
+                                        description = "Container image registry."
+                                    }
                                     app = {
                                         type = "object"
                                         properties = {
@@ -51,6 +55,7 @@ spec = {
                                         required = ["host", "namespace"]
                                     }
                                 }
+                                required = ["registry"]
                             }
                         }
                     }

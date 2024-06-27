@@ -16,6 +16,7 @@ schema repositoryFile:
     _name: str
     _file: str
     _content: str
+    _branch: bool = True
     apiVersion = "repo.github.upbound.io/v1alpha1"
     kind = "RepositoryFile"
     metadata = _metadata(_name, "file")
@@ -27,7 +28,8 @@ schema repositoryFile:
             content = _content
             file = _file
             repositorySelector.matchControllerRef = True
-            branchSelector.matchControllerRef = True
+            if _branch:
+                branch = "init"
         }
     }
 
@@ -73,6 +75,7 @@ items = [
         _content = """\
 /tmp
 """
+        _branch = False
     }
     repositoryFile {
         _name = "app"
@@ -81,19 +84,59 @@ items = [
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: AppClaim
 metadata:
-  name: """ + oxr.spec.id + """
+  name: ${oxr.spec.id}
 spec:
-  id: """ + oxr.spec.id + """
+  id: ${oxr.spec.id}
   compositionSelector:
     matchLabels:
       type: backend
       location: local
   parameters:
-    namespace: """ + oxr.spec.parameters.app.namespace +"""
-    image: ttl.sh/""" + oxr.spec.id + """
+    namespace: ${oxr.spec.parameters.app.namespace}
+    image: ${oxr.spec.parameters.registry}/${oxr.spec.id}
     port: 8080
-    host: """ + oxr.spec.parameters.app.host + """
+    host: ${oxr.spec.parameters.app.host}
 """
+    }
+    repositoryFile {
+        _name = "ci"
+        _file = ".github/workflows/ci.yaml"
+        _content = """\
+name: ci
+run-name: ci
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-container-image:
+    runs-on: ubuntu-latest
+    env:
+      TAG: 0.0.$[[ github.run_number ]]
+      FORCE_COLOR: 1
+    steps:
+      - uses: earthly/actions-setup@v1
+        with:
+          version: v0.8.0
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Build and push
+        run: |
+          earthly --push +all --tag $TAG
+      - name: Commit changes
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "Release $[[ env.TAG ]] [skip ci]"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: $[[ secrets.GITHUB_TOKEN ]]
+          branch: $[[ github.ref ]]
+""".replace("[[", "{{").replace("]]", "}}")
     }
     if oxr.spec.parameters.app.language == "go":
         repositoryFile {
@@ -108,20 +151,49 @@ func main() {
 """
         }
         repositoryFile {
-            _name = "dockerfile"
-            _file = "Dockerfile"
+            _name = "go-mod"
+            _file = "go.mod"
             _content = """\
-FROM golang:1.22.2-alpine AS build
-RUN mkdir /src
-WORKDIR /src
-ADD ./*.go .
-RUN GOOS=linux GOARCH=amd64 go build -o app
-RUN chmod +x app
+module app
 
-FROM scratch
-COPY --from=build /src/app /usr/local/bin/app
-EXPOSE 8080
-CMD ["app"]
+go 1.21.5
+"""
+        }
+        repositoryFile {
+            _name = "earthfile"
+            _file = "Earthfile"
+            _content = """\
+VERSION 0.8
+FROM ghcr.io/vfarcic/silly-demo-earthly:0.0.5
+ARG --global registry=${oxr.spec.parameters.registry}
+ARG --global image=${oxr.spec.id}
+WORKDIR /go-workdir
+
+binary:
+    COPY go.mod .
+    COPY *.go .
+    RUN GOOS=linux GOARCH=amd64 go build -o app
+    SAVE ARTIFACT app
+
+image:
+    BUILD +binary
+    ARG tag='latest'
+    FROM scratch
+    EXPOSE 8080
+    CMD ["app"]
+    ENV VERSION=$tag
+    COPY +binary/app /usr/local/bin/app
+    SAVE IMAGE --push $registry/$image:$tag $registry/$image:latest
+
+manifests:
+    RUN yq --inplace ".spec.parameters.image = \\"$registry/$image:$tag\\"" k8s/appclaim.yaml
+
+all:
+    ARG tag
+    WAIT
+        BUILD +image --tag $tag
+    END
+    BUILD +manifests --tag $tag
 """
         }
     if oxr.spec.parameters.app.language == "js":
@@ -133,15 +205,29 @@ console.log('Hello World');
 """
         }
         repositoryFile {
-            _name = "dockerfile"
-            _file = "Dockerfile"
+            _name = "earthfile"
+            _file = "Earthfile"
             _content = """\
-FROM scratch
-RUN echo "I haven't used JS for a while so you'll need to find someone else to write this Dockerfile for you."
+VERSION 0.8
+FROM ghcr.io/vfarcic/silly-demo-earthly:0.0.5
+ARG --global registry=${oxr.spec.parameters.registry}
+ARG --global image=${oxr.spec.id}
+
+image:
+    ARG tag='latest'
+    FROM scratch
+    RUN echo "I haven't used JS for a while so you'll need to find someone else to write this Earthfile for you."
+    SAVE IMAGE --push $registry/$image:$tag $registry/$image:latest
+
+manifests:
+    RUN yq --inplace ".spec.parameters.image = \\"$registry/$image:$tag\\"" k8s/appclaim.yaml
+
+all:
+    ARG tag
+    WAIT
+        BUILD +image --tag $tag
+    END
+    BUILD +manifests --tag $tag
 """
         }
 ]
-
-# FIXME: RepositoryFile: sqlclaim.yaml
-# FIXME: ArgoCD Application
-# FIXME: RepositoryFile: .github/workflows/ci.yaml

@@ -79,7 +79,5 @@ cluster-destroy-google:
 # Creates a kind cluster
 _cluster-create-kind:
   -kind create cluster
-  -helm repo add crossplane-stable https://charts.crossplane.io/stable
-  -helm repo update
-  helm upgrade --install crossplane crossplane-stable/crossplane --namespace crossplane-system --create-namespace --wait
+  helm upgrade --install crossplane crossplane --repo https://charts.crossplane.io/stable --namespace crossplane-system --create-namespace --wait
   for provider in `ls -1 providers | grep -v config`; do kubectl apply --filename providers/$provider; done
