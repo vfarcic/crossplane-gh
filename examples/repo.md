@@ -70,8 +70,6 @@ crossplane beta trace githubclaim crossplane-gh-demo \
 gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 ```
 
-FIXME: Check the contents of the branch
-
 FIXME: Merge the branch
 
 FIXME: Add Argo CD app
@@ -87,3 +85,17 @@ FIXME: Add the DB in AWS
 FIXME: Publish the configuration
 
 FIXME: Show the composition source code
+
+## Destroy
+
+```sh
+kubectl --namespace a-team delete --filename examples/repo.yaml
+
+kubectl get managed
+```
+
+> Wait until `repository` is deleted (no need to wait for the rest of the resources).
+
+```sh
+kind delete cluster
+```

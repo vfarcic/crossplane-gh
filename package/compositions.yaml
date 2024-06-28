@@ -130,7 +130,7 @@ spec:
             build-container-image:
               runs-on: ubuntu-latest
               env:
-                TAG: 0.0.$[[ github.run_number ]]
+                TAG: 0.0.$[[ github.run_number ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
                 FORCE_COLOR: 1
               steps:
                 - uses: earthly/actions-setup@v1
@@ -148,13 +148,13 @@ spec:
                     git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
                     git config --local user.name "github-actions[bot]"
                     git add .
-                    git commit -m "Release $[[ env.TAG ]] [skip ci]"
+                    git commit -m "Release $[[ env.TAG ]] [skip ci]" # TODO: Replace `[[` with `{{` and `]]` with `}}`
                 - name: Push changes
                   uses: ad-m/github-push-action@master
                   with:
-                    github_token: $[[ secrets.GITHUB_TOKEN ]]
-                    branch: $[[ github.ref ]]
-          """.replace("[[", "{{").replace("]]", "}}")
+                    github_token: $[[ secrets.GITHUB_TOKEN ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
+                    branch: $[[ github.ref ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
+          """
               }
               if oxr.spec.parameters.app.language == "go":
                   repositoryFile {
