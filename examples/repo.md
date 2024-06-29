@@ -1,5 +1,7 @@
 ## Setup
 
+FIXME: tmp.yaml
+
 ```sh
 devbox shell
 
@@ -70,7 +72,9 @@ crossplane beta trace githubclaim crossplane-gh-demo \
 gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 ```
 
-FIXME: Merge the branch
+> Merge the `init` branch
+
+> Update `.github/workflows/ci.yaml` by changing `[[` to `{{` and `]]` to `}}`.
 
 FIXME: Add Argo CD app
 
