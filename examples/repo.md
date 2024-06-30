@@ -72,9 +72,13 @@ crossplane beta trace githubclaim crossplane-gh-demo \
 gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 ```
 
-> Merge the `init` branch
+> Observe the `init` branch and files in it.
+
+> Observe the `Initial` pull request and merge it to the `main` branch.
 
 > Update `.github/workflows/ci.yaml` by changing `[[` to `{{` and `]]` to `}}`.
+
+> Observe GitHub Actions workflow run.
 
 FIXME: Add Argo CD app
 
