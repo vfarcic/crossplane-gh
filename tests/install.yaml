@@ -11,3 +11,8 @@ spec:
       language: go
       host: my-repo.acme.com
       namespace: a-team
+    repo:
+      user: my-user
+    gitops:
+      user: my-user
+      repo: my-gitops-repo

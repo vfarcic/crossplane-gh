@@ -74,11 +74,19 @@ yq --inplace \
     argocd-apps.yaml
 
 kubectl apply --filename argocd-apps.yaml
+
+yq --inplace \
+    ".spec.parameters.repo.user = \"$GITHUB_OWNER\"" \
+    examples/repo.yaml
+
+yq --inplace \
+    ".spec.parameters.gitops.user = \"$GITHUB_OWNER\"" \
+    examples/repo.yaml
 ```
 
 ## Example
 
-FIXME: Push to Git
+FIXME: Push to Git and let Argo CD sync it
 
 ```sh
 kubectl --namespace a-team apply --filename examples/repo.yaml

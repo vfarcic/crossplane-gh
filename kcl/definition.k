@@ -54,6 +54,30 @@ spec = {
                                         }
                                         required = ["host", "namespace"]
                                     }
+                                    repo = {
+                                        type = "object"
+                                        properties = {
+                                            user = {
+                                                type = "string"
+                                                description = "GitHub user where the repo with  GitOps (Argo CD) files is located."
+                                            }
+                                        }
+                                        required = ["user"]
+                                    }
+                                    gitops = {
+                                        type = "object"
+                                        properties = {
+                                            user = {
+                                                type = "string"
+                                                description = "GitHub user where the repo with  GitOps (Argo CD) files is located."
+                                            }
+                                            repo = {
+                                                type = "string"
+                                                description = "GitHub repo with  GitOps (Argo CD) files is located."
+                                            }
+                                        }
+                                        required = ["user", "repo"]
+                                    }
                                 }
                                 required = ["registry"]
                             }

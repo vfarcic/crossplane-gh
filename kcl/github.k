@@ -1,4 +1,21 @@
 oxr = option("params").oxr
+# oxr = {
+#     spec = {
+#         id = "xxx"
+#         parameters = {
+#             repo = {
+#                 user = "xxx"
+#             }
+#            gitops = {
+#                 user = "xxx"
+#                 repo = "xxx"
+#             }
+#             app = {
+#                 namespace = "xxx"
+#             }
+#         }
+#     }
+# }
 
 _metadata = lambda suffix: str, kind: str -> any {
     {
@@ -38,13 +55,21 @@ items = [
         apiVersion = "repo.github.upbound.io/v1alpha1"
         kind = "Repository"
         metadata = _metadata("", "repo")
-        spec.forProvider = {
-            name = oxr.spec.id
-            if oxr.spec.parameters.public:
-                visibility = "public"
-            else:
-                visibility = "private"
-            hasIssues = True
+        spec = {
+            forProvider = {
+                name = oxr.spec.id
+                if oxr.spec.parameters.public:
+                    visibility = "public"
+                else:
+                    visibility = "private"
+                hasIssues = True
+            }
+            managementPolicies: [
+                "Create",
+                "Observe",
+                "Update",
+                "LateInitialize",
+            ]
         }
     }
     {
@@ -64,9 +89,9 @@ items = [
             baseRef = "main"
             headRef = "init"
             body = """\
-Open https://github.com/vfarcic/${oxr.spec.id}/settings/actions and enable `Read and write permissions`.
-
-Review, approve or modify, merge, enjoy.
+1. Open https://github.com/${oxr.spec.parameters.repo.user}/${oxr.spec.id}/settings/actions and enable `Read and write permissions`.
+2. Open https://github.com/${oxr.spec.parameters.repo.user}/${oxr.spec.id}/settings/secrets/actions and add `PAT_TOKEN` with the GitHub token to `Repository secrets`.
+3. Review, approve or modify, merge, enjoy.
 """
             title = "Initial"
             maintainerCanModify = True
@@ -116,7 +141,7 @@ jobs:
   build-container-image:
     runs-on: ubuntu-latest
     env:
-      TAG: 0.0.$[[ github.run_number ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
+      TAG: 0.0.$$$$[[ github.run_number ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
       FORCE_COLOR: 1
     steps:
       - uses: earthly/actions-setup@v1
@@ -134,13 +159,53 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add .
-          git commit -m "Release $[[ env.TAG ]] [skip ci]" # TODO: Replace `[[` with `{{` and `]]` with `}}`
+          git commit -m "Release $$$$[[ env.TAG ]] [skip ci]" # TODO: Replace `[[` with `{{` and `]]` with `}}`
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: $[[ secrets.GITHUB_TOKEN ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
-          branch: $[[ github.ref ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
-"""
+          github_token: $$$$[[ secrets.GITHUB_TOKEN ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
+          branch: $$$$[[ github.ref ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
+""".replace("[[", "{{").replace("]]", "}}")
+    }
+    repositoryFile {
+        _name = "gitops"
+        _file = ".github/workflows/gitops.yaml"
+        _content = """\
+name: gitops
+run-name: gitops
+on:
+  push:
+    branches:
+      - init
+jobs:
+  build-container-image:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_COLOR: 1
+      APP: crossplane-gh-demo
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: ${oxr.spec.parameters.gitops.user}/${oxr.spec.parameters.gitops.repo}
+          token: $$$$[[ secrets.PAT_TOKEN ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
+      - name: Manifest
+        run: |
+            cp argocd-app.tmpl apps/${oxr.spec.id}.yaml
+            yq --inplace ".metadata.name = \\"${oxr.spec.id}\\"" apps/${oxr.spec.id}.yaml
+            yq --inplace ".spec.source.repoURL = \\"https://github.com/$GITHUB_REPOSITORY\\"" apps/${oxr.spec.id}.yaml
+            yq --inplace ".spec.destination.namespace = \\"${oxr.spec.parameters.app.namespace}\\"" apps/${oxr.spec.id}.yaml
+            git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            git add .
+            git commit -m "Added apps/${oxr.spec.id}.yaml [skip ci]"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: $$$$[[ secrets.PAT_TOKEN ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
+          repository: ${oxr.spec.parameters.gitops.user}/${oxr.spec.parameters.gitops.repo}
+          force: true
+""".replace("[[", "{{").replace("]]", "}}")
     }
     if oxr.spec.parameters.app.language == "go":
         repositoryFile {

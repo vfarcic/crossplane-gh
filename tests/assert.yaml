@@ -61,6 +61,9 @@ spec:
     name: my-repo-gitignore
   - apiVersion: repo.github.upbound.io/v1alpha1
     kind: RepositoryFile
+    name: my-repo-gitops
+  - apiVersion: repo.github.upbound.io/v1alpha1
+    kind: RepositoryFile
     name: my-repo-go-mod
   - apiVersion: repo.github.upbound.io/v1alpha1
     kind: RepositoryFile
@@ -246,7 +249,7 @@ spec:
         build-container-image:
           runs-on: ubuntu-latest
           env:
-            TAG: 0.0.$[[ github.run_number ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
+            TAG: 0.0.${{ github.run_number }}
             FORCE_COLOR: 1
           steps:
             - uses: earthly/actions-setup@v1
@@ -264,13 +267,62 @@ spec:
                 git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
                 git config --local user.name "github-actions[bot]"
                 git add .
-                git commit -m "Release $[[ env.TAG ]] [skip ci]" # TODO: Replace `[[` with `{{` and `]]` with `}}`
+                git commit -m "Release ${{ env.TAG }} [skip ci]"
             - name: Push changes
               uses: ad-m/github-push-action@master
               with:
-                github_token: $[[ secrets.GITHUB_TOKEN ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
-                branch: $[[ github.ref ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                branch: ${{ github.ref }}
     file: .github/workflows/ci.yaml
+    repositorySelector:
+      matchControllerRef: true
+    branch: init
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: RepositoryFile
+metadata:
+  name: my-repo-gitops
+spec:
+  forProvider:
+    commitAuthor: Crossplane
+    commitEmail: github-provider@crossplane.io
+    commitMessage: "Crossplane rocks"
+    content: |
+      name: gitops
+      run-name: gitops
+      on:
+        push:
+          branches:
+            - init
+      jobs:
+        build-container-image:
+          runs-on: ubuntu-latest
+          env:
+            FORCE_COLOR: 1
+            APP: crossplane-gh-demo
+          steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                repository: my-user/my-gitops-repo
+                token: ${{ secrets.PAT_TOKEN }}
+            - name: Manifest
+              run: |
+                  cp argocd-app.tmpl apps/my-repo.yaml
+                  yq --inplace ".metadata.name = \"my-repo\"" apps/my-repo.yaml
+                  yq --inplace ".spec.source.repoURL = \"https://github.com/$GITHUB_REPOSITORY\"" apps/my-repo.yaml
+                  yq --inplace ".spec.destination.namespace = \"a-team\"" apps/my-repo.yaml
+                  git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git config --local user.name "github-actions[bot]"
+                  git add .
+                  git commit -m "Added apps/my-repo.yaml [skip ci]"
+            - name: Push changes
+              uses: ad-m/github-push-action@master
+              with:
+                github_token: ${{ secrets.PAT_TOKEN }}
+                repository: my-user/my-gitops-repo
+                force: true
+    file: .github/workflows/gitops.yaml
     repositorySelector:
       matchControllerRef: true
     branch: init
@@ -284,8 +336,8 @@ spec:
     baseRef: main
     headRef: init
     body: |
-      1. Open https://github.com/vfarcic/my-repo/settings/actions and enable `Read and write permissions`.
-      2. Replace `[[` with `{{` and `]]` with `}}` in `.github/workflows/ci.yaml`.
+      1. Open https://github.com/my-user/my-repo/settings/actions and enable `Read and write permissions`.
+      2. Open https://github.com/my-user/my-repo/settings/secrets/actions and add `PAT_TOKEN` with the GitHub token to `Repository secrets`.
       3. Review, approve or modify, merge, enjoy.
     title: "Initial"
     maintainerCanModify: true
