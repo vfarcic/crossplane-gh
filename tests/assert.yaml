@@ -249,7 +249,7 @@ spec:
         build-container-image:
           runs-on: ubuntu-latest
           env:
-            TAG: 0.0.${{ github.run_number }}
+            TAG: 0.0.$${{ github.run_number }}
             FORCE_COLOR: 1
           steps:
             - uses: earthly/actions-setup@v1
@@ -267,12 +267,12 @@ spec:
                 git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
                 git config --local user.name "github-actions[bot]"
                 git add .
-                git commit -m "Release ${{ env.TAG }} [skip ci]"
+                git commit -m "Release $${{ env.TAG }} [skip ci]"
             - name: Push changes
               uses: ad-m/github-push-action@master
               with:
-                github_token: ${{ secrets.GITHUB_TOKEN }}
-                branch: ${{ github.ref }}
+                github_token: $${{ secrets.GITHUB_TOKEN }}
+                branch: $${{ github.ref }}
     file: .github/workflows/ci.yaml
     repositorySelector:
       matchControllerRef: true
@@ -305,7 +305,7 @@ spec:
               uses: actions/checkout@v4
               with:
                 repository: my-user/my-gitops-repo
-                token: ${{ secrets.PAT_TOKEN }}
+                token: $${{ secrets.PAT_TOKEN }}
             - name: Manifest
               run: |
                   cp argocd-app.tmpl apps/my-repo.yaml
@@ -319,7 +319,7 @@ spec:
             - name: Push changes
               uses: ad-m/github-push-action@master
               with:
-                github_token: ${{ secrets.PAT_TOKEN }}
+                github_token: $${{ secrets.PAT_TOKEN }}
                 repository: my-user/my-gitops-repo
                 force: true
     file: .github/workflows/gitops.yaml

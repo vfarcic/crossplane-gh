@@ -141,7 +141,7 @@ jobs:
   build-container-image:
     runs-on: ubuntu-latest
     env:
-      TAG: 0.0.$$$$[[ github.run_number ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
+      TAG: 0.0.$$[[ github.run_number ]]
       FORCE_COLOR: 1
     steps:
       - uses: earthly/actions-setup@v1
@@ -159,12 +159,12 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add .
-          git commit -m "Release $$$$[[ env.TAG ]] [skip ci]" # TODO: Replace `[[` with `{{` and `]]` with `}}`
+          git commit -m "Release $$[[ env.TAG ]] [skip ci]"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: $$$$[[ secrets.GITHUB_TOKEN ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
-          branch: $$$$[[ github.ref ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
+          github_token: $$[[ secrets.GITHUB_TOKEN ]]
+          branch: $$[[ github.ref ]]
 """.replace("[[", "{{").replace("]]", "}}")
     }
     repositoryFile {
@@ -188,7 +188,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: ${oxr.spec.parameters.gitops.user}/${oxr.spec.parameters.gitops.repo}
-          token: $$$$[[ secrets.PAT_TOKEN ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
+          token: $$$$[[ secrets.PAT_TOKEN ]]
       - name: Manifest
         run: |
             cp argocd-app.tmpl apps/${oxr.spec.id}.yaml
@@ -202,7 +202,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: $$$$[[ secrets.PAT_TOKEN ]] # TODO: Replace `[[` with `{{` and `]]` with `}}`
+          github_token: $$$$[[ secrets.PAT_TOKEN ]]
           repository: ${oxr.spec.parameters.gitops.user}/${oxr.spec.parameters.gitops.repo}
           force: true
 """.replace("[[", "{{").replace("]]", "}}")
