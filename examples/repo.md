@@ -2,6 +2,8 @@
 
 FIXME: tmp.yaml
 
+FIXME: Fork the repo
+
 ```sh
 devbox shell
 
@@ -59,6 +61,19 @@ stringData:
 " | kubectl --namespace crossplane-system apply --filename -
 
 kubectl create namespace a-team
+
+REPO_URL=$(git config --get remote.origin.url)
+
+helm upgrade --install argocd argo-cd \
+    --repo https://argoproj.github.io/argo-helm \
+    --namespace argocd --create-namespace \
+    --values argocd-values.yaml --wait
+
+yq --inplace \
+    ".spec.source.repoURL = \"https://github.com/$GITHUB_OWNER/crossplane-gh\"" \
+    argocd-apps.yaml
+
+kubectl apply --filename argocd-apps.yaml
 ```
 
 ## Example
@@ -72,13 +87,18 @@ crossplane beta trace githubclaim crossplane-gh-demo \
 gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 ```
 
-> Observe the `init` branch and files in it.
+FIXME: Observe the `init` branch and files in it.
 
-> Observe the `Initial` pull request and merge it to the `main` branch.
+FIXME: Observe the `Initial` pull request.
 
-> Update `.github/workflows/ci.yaml` by changing `[[` to `{{` and `]]` to `}}`.
+FIXME: Follow the instructions in the pull request description.
 
-> Observe GitHub Actions workflow run.
+FIXME: Merge the pull request.
+
+FIXME: Observe GitHub Actions workflow run.
+
+
+
 
 FIXME: Add Argo CD app
 

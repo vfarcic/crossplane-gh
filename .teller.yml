@@ -1,12 +1,11 @@
-project: dot
 providers:
-  google_secretmanager:
-    env:
-      UP_ACCOUNT:
-        path: projects/vfarcic/secrets/upbound-account/versions/1
-      UP_TOKEN:
-        path: projects/vfarcic/secrets/upbound-token/versions/1
-      GITHUB_TOKEN:
-        path: projects/vfarcic/secrets/github-token/versions/4
-      GITHUB_OWNER:
-        path: projects/vfarcic/secrets/github-user/versions/1
+  google_secrets_manager:
+    kind: google_secretmanager
+    maps:
+      - id: secrets
+        path: projects/vfarcic
+        keys:
+          upbound-account: UP_ACCOUNT
+          upbound-token: UP_TOKEN
+          github-token: GITHUB_TOKEN
+          github-user: GITHUB_OWNER
