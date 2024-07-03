@@ -78,6 +78,8 @@ kubectl apply --filename argocd-apps.yaml
 
 ## Example
 
+FIXME: Push to Git
+
 ```sh
 kubectl --namespace a-team apply --filename examples/repo.yaml
 
