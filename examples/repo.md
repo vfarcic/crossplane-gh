@@ -62,6 +62,8 @@ stringData:
 
 kubectl create namespace a-team
 
+kubectl create namespace git-repos
+
 REPO_URL=$(git config --get remote.origin.url)
 
 helm upgrade --install argocd argo-cd \
@@ -98,7 +100,7 @@ git commit -m "Repo"
 git push
 
 crossplane beta trace githubclaim crossplane-gh-demo \
-    --namespace a-team
+    --namespace git-repos
 
 gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 ```
@@ -140,12 +142,24 @@ FIXME: What else should I add?
 ## Destroy
 
 ```sh
-kubectl --namespace a-team delete --filename examples/repo.yaml
+rm apps/*.yaml
 
-kubectl get managed
+rm git-repos/*.yaml
+
+git add .
+
+git commit -m "Destroy"
+
+git push
 ```
 
-> Wait until `repository` is deleted (no need to wait for the rest of the resources).
+> Deleting repos is disabled in the Composition (by design), so it needs to be deleted manually.
+
+```sh
+gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
+```
+
+> Open `Settings`, click the `Delete this repository`, and follow the instructions.
 
 ```sh
 kind delete cluster
