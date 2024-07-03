@@ -89,9 +89,13 @@ yq --inplace \
 FIXME: Push to Git and let Argo CD sync it
 
 ```sh
-cp examples/repo.yaml git-repos/crossplane-gh-demo-repo.yaml
+cp examples/repo.yaml git-repos/crossplane-gh-demo.yaml
 
-kubectl --namespace a-team apply --filename examples/repo.yaml
+git add .
+
+git commit -m "Repo"
+
+git push
 
 crossplane beta trace githubclaim crossplane-gh-demo \
     --namespace a-team

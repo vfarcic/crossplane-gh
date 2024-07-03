@@ -32,7 +32,7 @@ spec:
     path: git-repos
   destination:
     server: https://kubernetes.default.svc
-    namespace: production
+    namespace: git-repos
   syncPolicy:
     automated:
       selfHeal: true
