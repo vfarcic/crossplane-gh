@@ -63,7 +63,11 @@ items = [
         spec.forProvider = {
             baseRef = "main"
             headRef = "init"
-            body = "Review, approve or modify, merge, enjoy."
+            body = """\
+Open https://github.com/vfarcic/${oxr.spec.id}/settings/actions and enable `Read and write permissions`.
+
+Review, approve or modify, merge, enjoy.
+"""
             title = "Initial"
             maintainerCanModify = True
             baseRepositorySelector.matchControllerRef = True
@@ -186,7 +190,10 @@ image:
     SAVE IMAGE --push $registry/$image:$tag $registry/$image:latest
 
 manifests:
+    ARG tag
+    COPY k8s/appclaim.yaml k8s/appclaim.yaml
     RUN yq --inplace ".spec.parameters.image = \\"$registry/$image:$tag\\"" k8s/appclaim.yaml
+    SAVE ARTIFACT k8s/appclaim.yaml AS LOCAL k8s/appclaim.yaml
 
 all:
     ARG tag

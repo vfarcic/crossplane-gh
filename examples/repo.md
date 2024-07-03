@@ -87,15 +87,16 @@ crossplane beta trace githubclaim crossplane-gh-demo \
 gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 ```
 
-FIXME: Observe the `init` branch and files in it.
+> Observe the `init` branch and files in it.
 
-FIXME: Observe the `Initial` pull request.
+> Observe the `Initial` pull request.
 
-FIXME: Follow the instructions in the pull request description.
+> Follow the instructions in the pull request description.
 
-FIXME: Merge the pull request.
+> Merge the pull request.
 
-FIXME: Observe GitHub Actions workflow run.
+> Observe GitHub Actions workflow run.
+
 
 
 
@@ -110,9 +111,15 @@ FIXME: Add the DB in Azure
 
 FIXME: Add the DB in AWS
 
+FIXME: Add devbox.json
+
 FIXME: Publish the configuration
 
 FIXME: Show the composition source code
+
+FIXME: Upbound spaces
+
+FIXME: What else should I add?
 
 ## Destroy
 

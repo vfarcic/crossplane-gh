@@ -78,6 +78,11 @@ spec:
     name: my-repo
     visibility: public
     hasIssues: true
+  managementPolicies:
+    - Create
+    - Observe
+    - Update
+    - LateInitialize
 ---
 apiVersion: repo.github.upbound.io/v1alpha1
 kind: Branch
@@ -279,9 +284,9 @@ spec:
     baseRef: main
     headRef: init
     body: |
-      Open https://github.com/vfarcic/crossplane-sql/settings/actions and enable `Read and write permissions`.
-
-      Review, approve or modify, merge, enjoy.
+      1. Open https://github.com/vfarcic/my-repo/settings/actions and enable `Read and write permissions`.
+      2. Replace `[[` with `{{` and `]]` with `}}` in `.github/workflows/ci.yaml`.
+      3. Review, approve or modify, merge, enjoy.
     title: "Initial"
     maintainerCanModify: true
     baseRepositorySelector:

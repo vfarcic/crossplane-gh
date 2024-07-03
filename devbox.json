@@ -13,7 +13,9 @@
     "viddy@0.4.0"
   ],
   "shell": {
-    "init_hook": [],
+    "init_hook": [
+      "source <(just --completions zsh)"
+    ],
     "scripts": {
       "cluster-create":  ["just cluster-create"],
       "cluster-destroy": ["just cluster-destroy"],
