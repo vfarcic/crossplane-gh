@@ -105,7 +105,7 @@ spec:
   forProvider:
     commitAuthor: Crossplane
     commitEmail: github-provider@crossplane.io
-    commitMessage: "Crossplane rocks"
+    commitMessage: "Crossplane rocks [skip ci]"
     content: |
       package main
       import "fmt"
@@ -290,12 +290,9 @@ spec:
     content: |
       name: gitops
       run-name: gitops
-      on:
-        push:
-          branches:
-            - init
+      on: workflow_dispatch
       jobs:
-        build-container-image:
+        manifest:
           runs-on: ubuntu-latest
           env:
             FORCE_COLOR: 1
@@ -339,6 +336,7 @@ spec:
       1. Open https://github.com/my-user/my-repo/settings/actions and enable `Read and write permissions`.
       2. Open https://github.com/my-user/my-repo/settings/secrets/actions and add `PAT_TOKEN` with the GitHub token to `Repository secrets`.
       3. Review, approve or modify, merge, enjoy.
+      4. Execute the `gitops` workflow to include the app in the GitOps repository.
     title: "Initial"
     maintainerCanModify: true
     baseRepositorySelector:

@@ -25,6 +25,8 @@ kubectl apply --filename providers/function-kcl.yaml
 
 kubectl apply --filename providers/provider-github.yaml
 
+kubectl apply --filename providers/configuration-dot-app.yaml
+
 kubectl apply --filename package/definition.yaml && sleep 1
 
 kubectl apply --filename package/compositions.yaml
@@ -103,7 +105,13 @@ git push
 
 crossplane beta trace githubclaim crossplane-gh-demo \
     --namespace git-repos
+```
 
+> If the output throws an `error`, Argo CD probably did not yet synchronize it. Wait for a few moments and try again.
+
+> Wait until the `STATUS` of all the resources is `Available`
+
+```sh
 gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 ```
 
