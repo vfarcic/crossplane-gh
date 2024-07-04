@@ -41,7 +41,7 @@ schema repositoryFile:
         forProvider = {
             commitAuthor = "Crossplane"
             commitEmail = "github-provider@crossplane.io"
-            commitMessage = "Crossplane rocks"
+            commitMessage = "Crossplane rocks [skip ci]"
             content = _content
             file = _file
             repositorySelector.matchControllerRef = True
@@ -92,6 +92,7 @@ items = [
 1. Open https://github.com/${oxr.spec.parameters.repo.user}/${oxr.spec.id}/settings/actions and enable `Read and write permissions`.
 2. Open https://github.com/${oxr.spec.parameters.repo.user}/${oxr.spec.id}/settings/secrets/actions and add `PAT_TOKEN` with the GitHub token to `Repository secrets`.
 3. Review, approve or modify, merge, enjoy.
+4. Execute the `gitops` workflow to include the app into the GitOps repository.
 """
             title = "Initial"
             maintainerCanModify = True
@@ -173,12 +174,9 @@ jobs:
         _content = """\
 name: gitops
 run-name: gitops
-on:
-  push:
-    branches:
-      - init
+on: workflow_dispatch
 jobs:
-  build-container-image:
+  manifest:
     runs-on: ubuntu-latest
     env:
       FORCE_COLOR: 1

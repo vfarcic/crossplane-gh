@@ -17,7 +17,7 @@ spec = {
         version = ">=v0.10.0"
     }, {
         provider = "xpkg.upbound.io/devops-toolkit/dot-application"
-        version = ">=v0.6.3"
+        version = ">=v0.6.5"
     }, {
         function = "xpkg.upbound.io/crossplane-contrib/function-auto-ready"
         version = ">=v0.2.1"

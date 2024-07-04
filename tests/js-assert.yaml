@@ -34,7 +34,7 @@ spec:
   forProvider:
     commitAuthor: Crossplane
     commitEmail: github-provider@crossplane.io
-    commitMessage: "Crossplane rocks"
+    commitMessage: "Crossplane rocks [skip ci]"
     content: |
       console.log('Hello World');
     file: main.js
@@ -50,7 +50,7 @@ spec:
   forProvider:
     commitAuthor: Crossplane
     commitEmail: github-provider@crossplane.io
-    commitMessage: "Crossplane rocks"
+    commitMessage: "Crossplane rocks [skip ci]"
     content: |
       VERSION 0.8
       FROM ghcr.io/vfarcic/silly-demo-earthly:0.0.5

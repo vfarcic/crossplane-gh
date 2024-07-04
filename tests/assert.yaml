@@ -125,7 +125,7 @@ spec:
   forProvider:
     commitAuthor: Crossplane
     commitEmail: github-provider@crossplane.io
-    commitMessage: "Crossplane rocks"
+    commitMessage: "Crossplane rocks [skip ci]"
     content: |
       module app
 
@@ -143,7 +143,7 @@ spec:
   forProvider:
     commitAuthor: Crossplane
     commitEmail: github-provider@crossplane.io
-    commitMessage: "Crossplane rocks"
+    commitMessage: "Crossplane rocks [skip ci]"
     content: |
       VERSION 0.8
       FROM ghcr.io/vfarcic/silly-demo-earthly:0.0.5
@@ -192,7 +192,7 @@ spec:
   forProvider:
     commitAuthor: Crossplane
     commitEmail: github-provider@crossplane.io
-    commitMessage: "Crossplane rocks"
+    commitMessage: "Crossplane rocks [skip ci]"
     content: |
       /tmp
     file: .gitignore
@@ -207,7 +207,7 @@ spec:
   forProvider:
     commitAuthor: Crossplane
     commitEmail: github-provider@crossplane.io
-    commitMessage: "Crossplane rocks"
+    commitMessage: "Crossplane rocks [skip ci]"
     content: |
       apiVersion: devopstoolkitseries.com/v1alpha1
       kind: AppClaim
@@ -237,7 +237,7 @@ spec:
   forProvider:
     commitAuthor: Crossplane
     commitEmail: github-provider@crossplane.io
-    commitMessage: "Crossplane rocks"
+    commitMessage: "Crossplane rocks [skip ci]"
     content: |
       name: ci
       run-name: ci
@@ -286,7 +286,7 @@ spec:
   forProvider:
     commitAuthor: Crossplane
     commitEmail: github-provider@crossplane.io
-    commitMessage: "Crossplane rocks"
+    commitMessage: "Crossplane rocks [skip ci]"
     content: |
       name: gitops
       run-name: gitops
@@ -336,7 +336,7 @@ spec:
       1. Open https://github.com/my-user/my-repo/settings/actions and enable `Read and write permissions`.
       2. Open https://github.com/my-user/my-repo/settings/secrets/actions and add `PAT_TOKEN` with the GitHub token to `Repository secrets`.
       3. Review, approve or modify, merge, enjoy.
-      4. Execute the `gitops` workflow to include the app in the GitOps repository.
+      4. Execute the `gitops` workflow to include the app into the GitOps repository.
     title: "Initial"
     maintainerCanModify: true
     baseRepositorySelector:
