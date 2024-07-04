@@ -25,6 +25,8 @@ kubectl apply --filename providers/function-kcl.yaml
 
 kubectl apply --filename providers/provider-github.yaml
 
+kubectl apply --filename providers/kubernetes-incluster.yaml
+
 kubectl apply --filename providers/configuration-dot-app.yaml
 
 kubectl apply --filename package/definition.yaml && sleep 1
@@ -92,8 +94,6 @@ yq --inplace \
 
 ## Example
 
-FIXME: Push to Git and let Argo CD sync it
-
 ```sh
 cp examples/repo.yaml git-repos/crossplane-gh-demo.yaml
 
@@ -125,13 +125,16 @@ gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 
 > Observe GitHub Actions workflow run.
 
+```sh
+crossplane beta trace appclaim crossplane-gh-demo \
+    --namespace a-team
+```
 
+> If the output throws an `error`, Argo CD probably did not yet synchronize it. Wait for a few moments and try again.
 
-
-
-FIXME: Add Argo CD app
-
-FIXME: Confirm that it was deployed
+```sh
+kubectl --namespace a-team get all,ingresses
+```
 
 FIXME: Add the DB in Google
 
