@@ -10,11 +10,13 @@
     "kyverno-chainsaw@0.2.3",
     "crossplane-cli@1.16.0",
     "gh@2.51.0",
-    "viddy@0.4.0"
+    "viddy@0.4.0",
+    "yq-go@4.44.2"
   ],
   "shell": {
     "init_hook": [
-      "source <(just --completions zsh)"
+      "if [ -n \"$ZSH_VERSION\" ]; then export SHELL_NAME=zsh; elif [ -n \"$BASH_VERSION\" ]; then export SHELL_NAME=bash;fi",
+      "source <(just --completions $SHELL_NAME)"
     ],
     "scripts": {
       "cluster-create":  ["just cluster-create"],

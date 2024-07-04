@@ -4,6 +4,8 @@ FIXME: tmp.yaml
 
 FIXME: Fork the repo
 
+FIXME: Convert to a script
+
 ```sh
 devbox shell
 
