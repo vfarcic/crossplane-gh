@@ -15,5 +15,6 @@ spec:
     repo:
       user: vfarcic
     gitops:
+      enabled: true
       user: vfarcic
       repo: crossplane-gh

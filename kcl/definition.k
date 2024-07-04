@@ -67,16 +67,20 @@ spec = {
                                     gitops = {
                                         type = "object"
                                         properties = {
+                                            enabled = {
+                                                type = "boolean"
+                                                description = "Whether to enable GitOps."
+                                                default = False
+                                            }
                                             user = {
                                                 type = "string"
-                                                description = "GitHub user where the repo with  GitOps (Argo CD) files is located."
+                                                description = "GitHub user where the repo with  GitOps (Argo CD) files is located. This is a mandatory field if `enabled` is set to `true`."
                                             }
                                             repo = {
                                                 type = "string"
-                                                description = "GitHub repo with  GitOps (Argo CD) files is located."
+                                                description = "GitHub repo with  GitOps (Argo CD) files is located. This is a mandatory field if `enabled` is set to `true`."
                                             }
                                         }
-                                        required = ["user", "repo"]
                                     }
                                 }
                                 required = ["registry"]

@@ -13,6 +13,10 @@ spec:
         - assert:
             file: assert.yaml
         - patch:
+            file: gitops.yaml
+        - assert:
+            file: gitops-assert.yaml
+        - patch:
             file: js.yaml
         - assert:
             file: js-assert.yaml

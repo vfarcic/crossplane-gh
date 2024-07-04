@@ -61,9 +61,6 @@ spec:
     name: my-repo-gitignore
   - apiVersion: repo.github.upbound.io/v1alpha1
     kind: RepositoryFile
-    name: my-repo-gitops
-  - apiVersion: repo.github.upbound.io/v1alpha1
-    kind: RepositoryFile
     name: my-repo-go-mod
   - apiVersion: repo.github.upbound.io/v1alpha1
     kind: RepositoryFile
@@ -113,27 +110,27 @@ spec:
       package main
 
       import (
-      	"fmt"
-      	"log"
-      	"net/http"
-      	"os"
+        "fmt"
+        "log"
+        "net/http"
+        "os"
 
-      	"github.com/gin-gonic/gin"
+        "github.com/gin-gonic/gin"
       )
 
       func main() {
-      	log.Println("Starting server...")
-      	router := gin.New()
-      	router.GET("/", rootHandler)
-      	port := os.Getenv("PORT")
-      	if len(port) == 0 {
-      		port = "8080"
-      	}
-      	router.Run(fmt.Sprintf(":%s", port))
+        log.Println("Starting server...")
+        router := gin.New()
+        router.GET("/", rootHandler)
+        port := os.Getenv("PORT")
+        if len(port) == 0 {
+          port = "8080"
+        }
+        router.Run(fmt.Sprintf(":%s", port))
       }
 
       func rootHandler(ctx *gin.Context) {
-      	ctx.String(http.StatusOK, "This is a silly demo")
+        ctx.String(http.StatusOK, "This is a silly demo")
       }
     file: main.go
     repositorySelector:
@@ -437,52 +434,6 @@ spec:
     branch: init
 ---
 apiVersion: repo.github.upbound.io/v1alpha1
-kind: RepositoryFile
-metadata:
-  name: my-repo-gitops
-spec:
-  forProvider:
-    commitAuthor: Crossplane
-    commitEmail: github-provider@crossplane.io
-    commitMessage: "Crossplane rocks [skip ci]"
-    content: |
-      name: gitops
-      run-name: gitops
-      on: workflow_dispatch
-      jobs:
-        manifest:
-          runs-on: ubuntu-latest
-          env:
-            FORCE_COLOR: 1
-            APP: crossplane-gh-demo
-          steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-              with:
-                repository: my-user/my-gitops-repo
-                token: $${{ secrets.PAT_TOKEN }}
-            - name: Manifest
-              run: |
-                  cp argocd-app.tmpl apps/my-repo.yaml
-                  yq --inplace ".metadata.name = \"my-repo\"" apps/my-repo.yaml
-                  yq --inplace ".spec.source.repoURL = \"https://github.com/$GITHUB_REPOSITORY\"" apps/my-repo.yaml
-                  yq --inplace ".spec.destination.namespace = \"a-team\"" apps/my-repo.yaml
-                  git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-                  git config --local user.name "github-actions[bot]"
-                  git add .
-                  git commit -m "Added apps/my-repo.yaml [skip ci]"
-            - name: Push changes
-              uses: ad-m/github-push-action@master
-              with:
-                github_token: $${{ secrets.PAT_TOKEN }}
-                repository: my-user/my-gitops-repo
-                force: true
-    file: .github/workflows/gitops.yaml
-    repositorySelector:
-      matchControllerRef: true
-    branch: init
----
-apiVersion: repo.github.upbound.io/v1alpha1
 kind: PullRequest
 metadata:
   name: my-repo-init
@@ -494,7 +445,6 @@ spec:
       1. Open https://github.com/my-user/my-repo/settings/actions and enable `Read and write permissions`.
       2. Open https://github.com/my-user/my-repo/settings/secrets/actions and add `PAT_TOKEN` with the GitHub token to `Repository secrets`.
       3. Review, approve or modify, merge, enjoy.
-      4. Execute the `gitops` workflow to include the app into the GitOps repository.
     title: "Initial"
     maintainerCanModify: true
     baseRepositorySelector:

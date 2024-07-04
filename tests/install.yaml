@@ -13,6 +13,3 @@ spec:
       namespace: a-team
     repo:
       user: my-user
-    gitops:
-      user: my-user
-      repo: my-gitops-repo
