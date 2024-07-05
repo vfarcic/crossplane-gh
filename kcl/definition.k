@@ -82,12 +82,37 @@ spec = {
                                             }
                                         }
                                     }
+                                    tools = {
+                                        type = "object"
+                                        properties = {
+                                            tmux = {
+                                                type = "boolean"
+                                                default = False
+                                                description = "Whether to enable tmux through Devbox."
+                                            }
+                                            registry = {
+                                                type = "object"
+                                                properties = {
+                                                    enabled = {
+                                                        type = "boolean"
+                                                        description = "Whether to enable the container image registry."
+                                                        default = False
+                                                    }
+                                                    namespace = {
+                                                        type = "string"
+                                                        description = "The Namespace."
+                                                    }
+                                                }
+                                                required = ["namespace"]
+                                            }
+                                        }
+                                    
+                                    }
                                 }
                                 required = ["registry"]
                             }
                         }
                     }
-                    # FIXME: Rewrite
                     status = {}
                 }
             }

@@ -73,6 +73,25 @@ spec:
                       repo:
                         type: string
                         description: GitHub repo with  GitOps (Argo CD) files is located. This is a mandatory field if `enabled` is set to `true`.
+                  tools:
+                    type: object
+                    properties:
+                      tmux:
+                        type: boolean
+                        default: false
+                        description: Whether to enable tmux through Devbox.
+                      registry:
+                        type: object
+                        properties:
+                          enabled:
+                            type: boolean
+                            description: Whether to enable the container image registry.
+                            default: false
+                          namespace:
+                            type: string
+                            description: The Namespace.
+                        required:
+                        - namespace
                 required:
                 - registry
           status: {}

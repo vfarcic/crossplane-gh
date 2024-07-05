@@ -55,6 +55,9 @@ spec:
     name: my-repo-ci
   - apiVersion: repo.github.upbound.io/v1alpha1
     kind: RepositoryFile
+    name: my-repo-devbox
+  - apiVersion: repo.github.upbound.io/v1alpha1
+    kind: RepositoryFile
     name: my-repo-earthfile
   - apiVersion: repo.github.upbound.io/v1alpha1
     kind: RepositoryFile
@@ -351,6 +354,30 @@ spec:
     content: |
       /tmp
     file: .gitignore
+    repositorySelector:
+      matchControllerRef: true
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: RepositoryFile
+metadata:
+  name: my-repo-devbox
+spec:
+  forProvider:
+    commitAuthor: Crossplane
+    commitEmail: github-provider@crossplane.io
+    commitMessage: "Crossplane rocks [skip ci]"
+    content: |
+      {
+        "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.11.1/.schema/devbox.schema.json",
+        "packages": [
+          "tmux@3.4"
+        ],
+        "shell": {
+          "init_hook": [],
+          "scripts": {}
+        }
+      }
+    file: devbox.json
     repositorySelector:
       matchControllerRef: true
 ---

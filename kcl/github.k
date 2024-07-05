@@ -95,6 +95,23 @@ items = [
         _branch = False
     }
     repositoryFile {
+        _name = "devbox"
+        _file = "devbox.json"
+        _content = """\
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.11.1/.schema/devbox.schema.json",
+  "packages": [
+    "tmux@3.4"
+  ],
+  "shell": {
+    "init_hook": [],
+    "scripts": {}
+  }
+}
+"""
+        _branch = False
+    }
+    repositoryFile {
         _name = "app"
         _file = "k8s/appclaim.yaml"
         _content = """\
