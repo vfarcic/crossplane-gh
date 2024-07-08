@@ -17,7 +17,7 @@ jobs:
           enable-cache: true
           project-path: .github/workflows
       - name: Test
-        run: devbox run test
+        run: devbox --config .github/workflows run test
       - name: Publish
         run: |
           export UP_TOKEN=${{ secrets.UP_TOKEN }}
