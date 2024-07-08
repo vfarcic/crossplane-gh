@@ -3,22 +3,14 @@
   "packages": [
     "kind@0.23.0",
     "kubernetes-helm@3.15.2",
-    "teller@2.0.7",
     "just@1.29.1",
     "kcl-cli@0.8.9",
-    "watchexec@2.1.1",
     "kyverno-chainsaw@0.2.3",
-    "crossplane-cli@1.16.0",
-    "gh@2.51.0",
-    "viddy@0.4.0",
     "yq-go@4.44.2",
     "upbound@0.31.0"
   ],
   "shell": {
-    "init_hook": [
-      "if [ -n \"$ZSH_VERSION\" ]; then export SHELL_NAME=zsh; elif [ -n \"$BASH_VERSION\" ]; then export SHELL_NAME=bash;fi",
-      "source <(just --completions $SHELL_NAME)"
-    ],
+    "init_hook": [],
     "scripts": {
       "cluster-create":  ["just cluster-create"],
       "cluster-destroy": ["just cluster-destroy"],

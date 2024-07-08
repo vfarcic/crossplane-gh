@@ -20,7 +20,7 @@ jobs:
           export UP_TOKEN=${{ secrets.UP_TOKEN }}
           export UP_ACCOUNT=${{ secrets.UP_ACCOUNT }}
           export VERSION=v0.0.${{ github.run_number }}
-          devbox run package-publish
+          devbox run --config .github/workflows package-publish
       - name: Commit changes
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
