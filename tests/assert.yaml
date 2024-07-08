@@ -310,7 +310,7 @@ spec:
       WORKDIR /go-workdir
 
       binary:
-          COPY go.mod .
+          COPY go.mod go.sum .
           COPY *.go .
           RUN GOOS=linux GOARCH=amd64 go build -o app
           SAVE ARTIFACT app

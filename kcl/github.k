@@ -141,16 +141,16 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: my-repo-password
+  name: ${oxr.spec.id}-password
 data:
   password: cG9zdGdyZXM=
 ---
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: SQLClaim
 metadata:
-  name: my-repo
+  name: ${oxr.spec.id}
 spec:
-  id: my-repo
+  id: ${oxr.spec.id}
   compositionSelector:
     matchLabels:
       provider: ${oxr.spec.parameters.db.provider}

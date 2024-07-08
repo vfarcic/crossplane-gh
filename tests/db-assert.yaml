@@ -41,16 +41,16 @@ spec:
       apiVersion: v1
       kind: Secret
       metadata:
-        name: my-repo-password
+        name: my-repo-db-password
       data:
         password: cG9zdGdyZXM=
       ---
       apiVersion: devopstoolkitseries.com/v1alpha1
       kind: SQLClaim
       metadata:
-        name: my-repo
+        name: my-repo-db
       spec:
-        id: my-repo
+        id: my-repo-db
         compositionSelector:
           matchLabels:
             provider: google

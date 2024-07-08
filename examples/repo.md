@@ -27,6 +27,8 @@ kubectl apply --filename providers/provider-github.yaml
 
 kubectl apply --filename providers/kubernetes-incluster.yaml
 
+kubectl apply --filename providers/helm-incluster.yaml
+
 kubectl apply --filename providers/configuration-dot-app.yaml
 
 kubectl apply --filename providers/configuration-dot-sql.yaml
@@ -152,6 +154,8 @@ gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 
 > Observe GitHub Actions workflow run.
 
+FIXME: Resources ready function
+
 ```sh
 crossplane beta trace appclaim crossplane-gh-demo \
     --namespace a-team
@@ -162,7 +166,7 @@ crossplane beta trace appclaim crossplane-gh-demo \
 ```sh
 kubectl --namespace a-team get all,ingresses
 
-crossplane beta trace dbclaim crossplane-gh-demo \
+crossplane beta trace sqlclaim crossplane-gh-demo \
     --namespace a-team
 
 kubectl aws
