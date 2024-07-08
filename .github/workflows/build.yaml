@@ -15,21 +15,21 @@ jobs:
         uses: jetpack-io/devbox-install-action@v0.11.0
       - name: Test
         run: devbox run test
-      - name: Publish
-        run: |
-          export UP_TOKEN=${{ secrets.UP_TOKEN }}
-          export UP_ACCOUNT=${{ secrets.UP_ACCOUNT }}
-          export VERSION=v0.0.${{ github.run_number }}
-          devbox run package-publish
-      - name: Commit changes
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add .
-          git commit -m "Config update [skip ci]"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.CROSSPLANE_TOKEN }}
-          branch: ${{ github.ref }}
+      # - name: Publish
+      #   run: |
+      #     export UP_TOKEN=${{ secrets.UP_TOKEN }}
+      #     export UP_ACCOUNT=${{ secrets.UP_ACCOUNT }}
+      #     export VERSION=v0.0.${{ github.run_number }}
+      #     devbox run package-publish
+      # - name: Commit changes
+      #   run: |
+      #     git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      #     git config --local user.name "github-actions[bot]"
+      #     git add .
+      #     git commit -m "Config update [skip ci]"
+      # - name: Push changes
+      #   uses: ad-m/github-push-action@master
+      #   with:
+      #     github_token: ${{ secrets.CROSSPLANE_TOKEN }}
+      #     branch: ${{ github.ref }}
 
