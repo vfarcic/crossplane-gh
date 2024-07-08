@@ -15,8 +15,9 @@
   ],
   "shell": {
     "init_hook": [
-      "if [ ! -z \"$ZSH_VERSION\" ]; then export SHELL_NAME=zsh; elif [ ! -z \"$BASH_VERSION\" ]; then export SHELL_NAME=bash; fi",
-      "if [ ! -z \"$SHELL_NAME\" ]; then source <(just --completions $SHELL_NAME); fi"
+      "set -e",
+      "source <(just --completions zsh)",
+      "set +e"
     ],
     "scripts": {
       "cluster-create":  ["just cluster-create"],
