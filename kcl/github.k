@@ -132,6 +132,34 @@ spec:
     host: ${oxr.spec.parameters.app.host}
 """
     }
+    if oxr.spec.parameters?.db?.enabled:
+      repositoryFile {
+          _name = "db"
+          _file = "k8s/dbclaim.yaml"
+          _content = """\
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-repo-password
+data:
+  password: cG9zdGdyZXM=
+---
+apiVersion: devopstoolkitseries.com/v1alpha1
+kind: SQLClaim
+metadata:
+  name: my-repo
+spec:
+  id: my-repo
+  compositionSelector:
+    matchLabels:
+      provider: ${oxr.spec.parameters.db.provider}
+      db: postgresql
+  parameters:
+    version: "${oxr.spec.parameters.db.version}"
+    size: medium
+"""
+      }
     repositoryFile {
         _name = "ci"
         _file = ".github/workflows/ci.yaml"

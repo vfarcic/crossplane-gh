@@ -20,6 +20,10 @@ spec:
             file: js.yaml
         - assert:
             file: js-assert.yaml
+        - patch:
+            file: db.yaml
+        - assert:
+            file: db-assert.yaml
     #   catch:
     #     - get:
     #         resource: managed

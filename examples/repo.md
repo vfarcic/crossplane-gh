@@ -29,6 +29,8 @@ kubectl apply --filename providers/kubernetes-incluster.yaml
 
 kubectl apply --filename providers/configuration-dot-app.yaml
 
+kubectl apply --filename providers/configuration-dot-sql.yaml
+
 kubectl apply --filename package/definition.yaml && sleep 1
 
 kubectl apply --filename package/compositions.yaml
@@ -42,6 +44,8 @@ kubectl wait --for=condition=healthy function.pkg.crossplane.io \
     --all
 
 kubectl apply --filename providers/provider-github-config.yaml
+
+kubectl apply --filename providers/provider-aws-config.yaml
 ```
 
 > Replace `[...]` with your GitHub token
@@ -65,6 +69,29 @@ type: Opaque
 stringData:
   credentials: '{\"token\":\"${GITHUB_TOKEN}\",\"owner\":\"${GITHUB_OWNER}\"}'
 " | kubectl --namespace crossplane-system apply --filename -
+```
+
+> Replace `[...]` with your AWS Access Key ID
+
+```sh
+export AWS_ACCESS_KEY_ID=[...]
+```
+
+> Replace `[...]` with your AWS Secret Access Key
+
+```sh
+export AWS_SECRET_ACCESS_KEY=[...]
+```
+
+```sh
+echo "[default]
+aws_access_key_id = $AWS_ACCESS_KEY_ID
+aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
+" >aws-creds.conf
+
+kubectl --namespace crossplane-system \
+    create secret generic aws-creds \
+    --from-file creds=./aws-creds.conf
 
 kubectl create namespace a-team
 
@@ -134,15 +161,12 @@ crossplane beta trace appclaim crossplane-gh-demo \
 
 ```sh
 kubectl --namespace a-team get all,ingresses
+
+crossplane beta trace dbclaim crossplane-gh-demo \
+    --namespace a-team
+
+kubectl aws
 ```
-
-FIXME: Add the DB in Google
-
-FIXME: Add the DB in Azure
-
-FIXME: Add the DB in AWS
-
-FIXME: Add devbox.json
 
 FIXME: Publish the configuration
 

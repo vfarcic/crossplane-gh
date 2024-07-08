@@ -1,0 +1,10 @@
+apiVersion: devopstoolkitseries.com/v1alpha1
+kind: GitHubClaim
+metadata:
+  name: my-repo
+spec:
+  parameters:
+    db:
+      enabled: true
+      provider: google
+      version: "12"

@@ -1,0 +1,64 @@
+---
+apiVersion: devopstoolkitseries.com/v1alpha1
+kind: GitHubClaim
+metadata:
+  name: my-repo
+  namespace: ($namespace)
+spec:
+  parameters:
+    db:
+      enabled: true
+      provider: google
+      version: "12"
+---
+apiVersion: devopstoolkitseries.com/v1alpha1
+kind: GitHub
+metadata:
+  labels:
+    crossplane.io/claim-name: my-repo
+    crossplane.io/claim-namespace: ($namespace)
+spec:
+  parameters:
+    db:
+      enabled: true
+      provider: google
+      version: "12"
+  (resourceRefs[?name == 'my-repo-db']):
+  - apiVersion: repo.github.upbound.io/v1alpha1
+    kind: RepositoryFile
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: RepositoryFile
+metadata:
+  name: my-repo-db
+spec:
+  forProvider:
+    commitAuthor: Crossplane
+    commitEmail: github-provider@crossplane.io
+    commitMessage: "Crossplane rocks [skip ci]"
+    content: |
+      ---
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: my-repo-password
+      data:
+        password: cG9zdGdyZXM=
+      ---
+      apiVersion: devopstoolkitseries.com/v1alpha1
+      kind: SQLClaim
+      metadata:
+        name: my-repo
+      spec:
+        id: my-repo
+        compositionSelector:
+          matchLabels:
+            provider: google
+            db: postgresql
+        parameters:
+          version: "12"
+          size: medium
+    file: k8s/dbclaim.yaml
+    repositorySelector:
+      matchControllerRef: true
+    branch: init

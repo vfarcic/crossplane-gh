@@ -54,6 +54,25 @@ spec = {
                                         }
                                         required = ["host", "namespace"]
                                     }
+                                    db = {
+                                        type = "object"
+                                        properties = {
+                                            enabled = {
+                                                type = "boolean"
+                                                description = "Whether to have a database server."
+                                                default = False
+                                            }
+                                            provider = {
+                                                type = "string"
+                                                description = "The database provider. Currently supported providers: aws, azure, google."
+                                                default = "aws"
+                                            }
+                                            version = {
+                                                type = "string"
+                                                description = "The database server version."
+                                            }
+                                        }
+                                    }
                                     repo = {
                                         type = "object"
                                         properties = {

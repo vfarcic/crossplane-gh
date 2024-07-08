@@ -9,3 +9,5 @@ providers:
           upbound-token: UP_TOKEN
           github-token: GITHUB_TOKEN
           github-user: GITHUB_OWNER
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
