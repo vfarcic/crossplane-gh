@@ -5,4 +5,4 @@ kind: Configuration
 metadata:
   name: crossplane-github
 spec:
-  package: xpkg.upbound.io/devops-toolkit/dot-github:v0.12.75
+  package: xpkg.upbound.io/devops-toolkit/dot-github:0.0.1
