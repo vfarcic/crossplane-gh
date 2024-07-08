@@ -16,6 +16,7 @@
   "shell": {
     "init_hook": [
       "if [ -n \"$ZSH_VERSION\" ]; then export SHELL_NAME=zsh; elif [ -n \"$BASH_VERSION\" ]; then export SHELL_NAME=bash;fi",
+      "echo xxx",
       "echo $SHELL_NAME",
       "echo xxx",
       "source <(just --completions $SHELL_NAME)"
