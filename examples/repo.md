@@ -166,10 +166,10 @@ crossplane beta trace appclaim crossplane-gh-demo \
 ```sh
 kubectl --namespace a-team get all,ingresses
 
-crossplane beta trace sqlclaim crossplane-gh-demo \
+crossplane beta trace sqlclaim crossplane-gh-demo-db \
     --namespace a-team
 
-kubectl aws
+kubectl get aws
 ```
 
 FIXME: Publish the configuration
