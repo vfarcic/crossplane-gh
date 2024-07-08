@@ -141,16 +141,16 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: ${oxr.spec.id}-password
+  name: ${oxr.spec.id}-db-password
 data:
   password: cG9zdGdyZXM=
 ---
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: SQLClaim
 metadata:
-  name: ${oxr.spec.id}
+  name: ${oxr.spec.id}-db
 spec:
-  id: ${oxr.spec.id}
+  id: ${oxr.spec.id}-db
   compositionSelector:
     matchLabels:
       provider: ${oxr.spec.parameters.db.provider}
@@ -416,7 +416,7 @@ ARG --global image=${oxr.spec.id}
 WORKDIR /go-workdir
 
 binary:
-    COPY go.mod .
+    COPY go.mod go.sum .
     COPY *.go .
     RUN GOOS=linux GOARCH=amd64 go build -o app
     SAVE ARTIFACT app
