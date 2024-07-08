@@ -14,11 +14,7 @@
     "yq-go@4.44.2"
   ],
   "shell": {
-    "init_hook": [
-      "set -e",
-      "source <(just --completions zsh)",
-      "set +e"
-    ],
+    "init_hook": [],
     "scripts": {
       "cluster-create":  ["just cluster-create"],
       "cluster-destroy": ["just cluster-destroy"],
