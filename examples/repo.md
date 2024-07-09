@@ -1,112 +1,36 @@
 ## Setup
 
-FIXME: tmp.yaml
+> Watch the [GitHub CLI (gh) - How to manage repositories more efficiently](https://youtu.be/BII6ZY2Rnlc) video if you are not familiar with GitHub CLI.
 
-FIXME: Fork the repo
+```sh
+gh repo fork vfarcic/crossplane-gh --clone --remote
 
-FIXME: Convert to a script
+cd crossplane-gh
+
+gh repo set-default
+```
+
+> Select the fork as the default repository
+
+> Make sure that Docker is up-and-running. We'll use it to create a KinD cluster.
+
+> Watch [Nix for Everyone: Unleash Devbox for Simplified Development](https://youtu.be/WiFLtcBvGMU) if you are not familiar with Devbox. Alternatively, you can skip Devbox and install all the tools listed in `devbox.json` yourself.
 
 ```sh
 devbox shell
-
-kind create cluster
-
-helm upgrade --install crossplane crossplane \
-    --repo https://charts.crossplane.io/stable \
-    --namespace crossplane-system --create-namespace --wait
 ```
 
-FIXME: Switch to the configuration
+> The setup assumes that you are using AWS. Please open an issue if you would like me to add the support for Azure or Google Cloud. Alternatively, you can select `none` during the setup resulting in no database being created (but everything else working).
 
 ```sh
-kubectl apply --filename config.yaml
+chmod +x setup.sh
 
-kubectl apply --filename providers/kubernetes-incluster.yaml
-
-kubectl apply --filename providers/helm-incluster.yaml
-
-sleep 60
-
-kubectl wait --for=condition=healthy provider.pkg.crossplane.io \
-    --all
-
-kubectl apply --filename providers/provider-github-config.yaml
-
-kubectl apply --filename providers/provider-aws-config.yaml
-```
-
-> Replace `[...]` with your GitHub token
-
-```sh
-export GITHUB_TOKEN=[...]
-```
-
-> Replace `[...]` with your GitHub owner
-
-```sh
-export GITHUB_OWNER=[...]
-
-echo "
-apiVersion: v1
-kind: Secret
-metadata:
-  name: github
-  namespace: crossplane-system
-type: Opaque
-stringData:
-  credentials: '{\"token\":\"${GITHUB_TOKEN}\",\"owner\":\"${GITHUB_OWNER}\"}'
-" | kubectl --namespace crossplane-system apply --filename -
-```
-
-> Replace `[...]` with your AWS Access Key ID
-
-```sh
-export AWS_ACCESS_KEY_ID=[...]
-```
-
-> Replace `[...]` with your AWS Secret Access Key
-
-```sh
-export AWS_SECRET_ACCESS_KEY=[...]
-```
-
-```sh
-echo "[default]
-aws_access_key_id = $AWS_ACCESS_KEY_ID
-aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
-" >aws-creds.conf
-
-kubectl --namespace crossplane-system \
-    create secret generic aws-creds \
-    --from-file creds=./aws-creds.conf
-
-kubectl create namespace a-team
-
-kubectl create namespace git-repos
-
-REPO_URL=$(git config --get remote.origin.url)
-
-helm upgrade --install argocd argo-cd \
-    --repo https://argoproj.github.io/argo-helm \
-    --namespace argocd --create-namespace \
-    --values argocd-values.yaml --wait
-
-yq --inplace \
-    ".spec.source.repoURL = \"https://github.com/$GITHUB_OWNER/crossplane-gh\"" \
-    argocd-apps.yaml
-
-kubectl apply --filename argocd-apps.yaml
-
-yq --inplace \
-    ".spec.parameters.repo.user = \"$GITHUB_OWNER\"" \
-    examples/repo.yaml
-
-yq --inplace \
-    ".spec.parameters.gitops.user = \"$GITHUB_OWNER\"" \
-    examples/repo.yaml
+./setup.sh
 ```
 
 ## Example
+
+FIXME: tmp.yaml
 
 ```sh
 cp examples/repo.yaml git-repos/crossplane-gh-demo.yaml
@@ -153,9 +77,11 @@ crossplane beta trace sqlclaim crossplane-gh-demo-db \
     --namespace a-team
 
 kubectl get aws
-```
 
-FIXME: Show the composition source code
+cat package/compositions.yaml
+
+cat kcl/github.k
+```
 
 FIXME: What else should I add?
 
@@ -171,7 +97,11 @@ git add .
 git commit -m "Destroy"
 
 git push
+
+kubectl get managed
 ```
+
+> Wait until all managed resources are removed (ignore `object`)
 
 > Deleting repos is disabled in the Composition (by design), so it needs to be deleted manually.
 

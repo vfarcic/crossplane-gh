@@ -97,6 +97,54 @@
         }
       }
     },
+    "gum@0.14.1": {
+      "last_modified": "2024-07-07T16:08:25Z",
+      "resolved": "github:NixOS/nixpkgs/ab82a9612aa45284d4adf69ee81871a389669a9e#gum",
+      "source": "devbox-search",
+      "version": "0.14.1",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/hi946camicx98bv9y9nz6jx2fyxcc9kk-gum-0.14.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/hi946camicx98bv9y9nz6jx2fyxcc9kk-gum-0.14.1"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/3z1lqas4yni9hzvx2kpbmd108fs7qr0r-gum-0.14.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/3z1lqas4yni9hzvx2kpbmd108fs7qr0r-gum-0.14.1"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/hxfw2r39malghnmrm20d23qvf3p1lwdg-gum-0.14.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/hxfw2r39malghnmrm20d23qvf3p1lwdg-gum-0.14.1"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/js1fcw5brznb0lcw55l5b3ad4rwfj4mf-gum-0.14.1",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/js1fcw5brznb0lcw55l5b3ad4rwfj4mf-gum-0.14.1"
+        }
+      }
+    },
     "just@1.29.1": {
       "last_modified": "2024-06-16T13:15:37Z",
       "resolved": "github:NixOS/nixpkgs/683aa7c4e385509ca651d49eeb35e58c7a1baad6#just",
