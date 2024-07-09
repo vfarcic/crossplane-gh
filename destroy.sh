@@ -6,6 +6,8 @@ Are you ready to start?
 Feel free to say "No" and inspect the script if you prefer setting up resources manually.
 ' || exit 0
 
+git pull
+
 rm -f apps/*.yaml
 
 rm -f git-repos/*.yaml
