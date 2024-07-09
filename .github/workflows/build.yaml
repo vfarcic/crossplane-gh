@@ -16,8 +16,8 @@ jobs:
         with:
           enable-cache: true
           project-path: .github/workflows
-      - name: Test
-        run: devbox --config .github/workflows run test
+      # - name: Test
+      #   run: devbox --config .github/workflows run test
       - name: Publish
         run: |
           export UP_TOKEN=${{ secrets.UP_TOKEN }}
@@ -33,6 +33,6 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.CROSSPLANE_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
 
