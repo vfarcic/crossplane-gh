@@ -20,7 +20,11 @@ kubectl apply --filename providers/helm-incluster.yaml
 
 gum spin --spinner dot \
     --title "Waiting for Crossplane providers to be deployed..." \
-    -- sleep 60 && kubectl wait \
+    -- sleep 60
+
+gum spin --spinner dot \
+    --title "Waiting for Crossplane providers to be deployed..." \
+    -- kubectl wait \
     --for=condition=healthy provider.pkg.crossplane.io --all \
     --timeout 5m
 
