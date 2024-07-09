@@ -19,6 +19,9 @@ spec = {
         provider = "xpkg.upbound.io/devops-toolkit/dot-application"
         version = ">=v0.6.5"
     }, {
+        provider = "xpkg.upbound.io/devops-toolkit/dot-sql"
+        version = ">=v0.8.108"
+    }, {
         function = "xpkg.upbound.io/crossplane-contrib/function-auto-ready"
         version = ">=v0.2.1"
     }, {

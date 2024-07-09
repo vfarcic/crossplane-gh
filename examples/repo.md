@@ -19,30 +19,15 @@ helm upgrade --install crossplane crossplane \
 FIXME: Switch to the configuration
 
 ```sh
-kubectl apply --filename providers/function-auto-ready.yaml
-
-kubectl apply --filename providers/function-kcl.yaml
-
-kubectl apply --filename providers/provider-github.yaml
+kubectl apply --filename config.yaml
 
 kubectl apply --filename providers/kubernetes-incluster.yaml
 
 kubectl apply --filename providers/helm-incluster.yaml
 
-kubectl apply --filename providers/configuration-dot-app.yaml
-
-kubectl apply --filename providers/configuration-dot-sql.yaml
-
-kubectl apply --filename package/definition.yaml && sleep 1
-
-kubectl apply --filename package/compositions.yaml
-
 sleep 60
 
 kubectl wait --for=condition=healthy provider.pkg.crossplane.io \
-    --all
-
-kubectl wait --for=condition=healthy function.pkg.crossplane.io \
     --all
 
 kubectl apply --filename providers/provider-github-config.yaml
@@ -154,8 +139,6 @@ gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 
 > Observe GitHub Actions workflow run.
 
-FIXME: Resources ready function
-
 ```sh
 crossplane beta trace appclaim crossplane-gh-demo \
     --namespace a-team
@@ -172,11 +155,7 @@ crossplane beta trace sqlclaim crossplane-gh-demo-db \
 kubectl get aws
 ```
 
-FIXME: Publish the configuration
-
 FIXME: Show the composition source code
-
-FIXME: Upbound spaces
 
 FIXME: What else should I add?
 
