@@ -219,7 +219,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: ${oxr.spec.parameters.gitops.user}/${oxr.spec.parameters.gitops.repo}
-          token: $$$$[[ secrets.PAT_TOKEN ]]
+          token: $$[[ secrets.PAT_TOKEN ]]
       - name: Manifest
         run: |
             cp argocd-app.tmpl apps/${oxr.spec.id}.yaml
@@ -233,7 +233,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: $$$$[[ secrets.PAT_TOKEN ]]
+          github_token: $$[[ secrets.PAT_TOKEN ]]
           repository: ${oxr.spec.parameters.gitops.user}/${oxr.spec.parameters.gitops.repo}
           force: true
 """.replace("[[", "{{").replace("]]", "}}")
