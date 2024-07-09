@@ -18,16 +18,16 @@ git commit -m "Destroy"
 
 git push
 
-COUNTER=$(kubectl get managed --no-headers | grep -v object | wc -l)
+COUNTER=$(kubectl get managed --no-headers | grep -v object | wc -l | tr -d '[:space:]')
 
 while [ $COUNTER -ne 0 ]; do
     sleep 10
     echo "Waiting for $COUNTER resources to be deleted"
-    COUNTER=$(kubectl get managed --no-headers | grep -v object | wc -l)
+    COUNTER=$(kubectl get managed --no-headers | grep -v object | wc -l | tr -d '[:space:]')
 done
 
-gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
-
 kind delete cluster
+
+gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 
 gum format '## Open "Settings", click the "Delete this repository" button, and follow the instructions.'
