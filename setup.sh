@@ -20,8 +20,9 @@ kubectl apply --filename providers/helm-incluster.yaml
 
 gum spin --spinner dot \
     --title "Waiting for Crossplane providers to be deployed..." \
-    -- sleep 30 && kubectl wait \
-    --for=condition=healthy provider.pkg.crossplane.io --all
+    -- sleep 60 && kubectl wait \
+    --for=condition=healthy provider.pkg.crossplane.io --all \
+    --timeout 5m
 
 GITHUB_TOKEN=$(gum input --placeholder "GitHub Token" \
     --value "$GITHUB_TOKEN")
