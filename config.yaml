@@ -3,6 +3,6 @@
 apiVersion: pkg.crossplane.io/v1
 kind: Configuration
 metadata:
-  name: crossplane-github
+  name: devops-toolkit-dot-github
 spec:
   package: xpkg.upbound.io/devops-toolkit/dot-github:v0.0.24
