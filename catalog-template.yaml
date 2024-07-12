@@ -8,7 +8,7 @@ spec:
   owner: vfarcic/crossplanme-gh
   type: service
   parameters:
-    - title: General Info 111
+    - title: General Info 222
       required:
         - public
         - registry
@@ -16,7 +16,7 @@ spec:
         public:
           type: string # FIXME: boolean
           default: "true"
-          pattern: ^(?i)(true|false)$
+          pattern: '^(true|false)*$'
         registry:
           type: string
           default: ttl.sh
