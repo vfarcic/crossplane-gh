@@ -20,31 +20,19 @@ spec:
         registry:
           type: string
           default: ttl.sh
-        xxx:
+        app:
           type: object
           properties:
-            a:
+            language:
+              type: string # FIXME: array
+              default: go
+              pattern: '^(go|js)*$'
+            host:
               type: string
-              default: "true"
-            b:
+              default: my-repo.acme.com
+            namespace:
               type: string
-              default: "false"
-    - title: App
-      required:
-        - appLanguage
-        - appHost
-        - appNamespace
-      properties:
-        appLanguage:
-          type: string # FIXME: array
-          default: go
-          pattern: '^(go|js)*$'
-        appHost:
-          type: string
-          default: my-repo.acme.com
-        appNamespace:
-          type: string
-          default: a-team
+              default: a-team
     - title: DB
       required:
         - dbEnabled
