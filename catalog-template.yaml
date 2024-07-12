@@ -16,6 +16,7 @@ spec:
         public:
           type: string # FIXME: boolean
           default: "true"
+          pattern: ^(?i)(true|false)$
         registry:
           type: string
           default: ttl.sh
@@ -43,7 +44,6 @@ spec:
         dbEnabled:
           type: string # FIXME: boolean
           default: "true"
-          pattern: ^(?i)(true|false)$
         dbProvider:
           type: string
           default: aws # FIXME: array
