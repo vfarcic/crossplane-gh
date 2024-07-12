@@ -30,8 +30,6 @@ chmod +x setup.sh
 
 ## Example
 
-FIXME: tmp.yaml
-
 ```sh
 cp examples/repo.yaml git-repos/crossplane-gh-demo.yaml
 
@@ -82,8 +80,6 @@ cat package/compositions.yaml
 
 cat kcl/github.k
 ```
-
-FIXME: What else should I add?
 
 ## Destroy
 

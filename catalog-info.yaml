@@ -1,0 +1,17 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: dot-github
+  description: Silly description
+  annotations:
+    github.com/project-slug: vfarcic/crossplane-gh
+    backstage.io/techdocs-ref: dir:. 
+    backstage.io/kubernetes-id: dot
+    backstage.io/kubernetes-namespace: git-repos
+    backstage.io/kubernetes-label-selector: app.kubernetes.io/name=silly-demo
+spec:
+  type: infra
+  lifecycle: production
+  owner: vfarcic
+  system: DevOpsCatalog
+

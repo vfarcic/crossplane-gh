@@ -13,7 +13,9 @@
     "viddy@0.4.0",
     "yq-go@4.44.2",
     "upbound@0.31.0",
-    "gum@0.14.1"
+    "gum@0.14.1",
+    "path:gcloud#google-cloud-sdk",
+    "eksctl@0.184.0"
   ],
   "shell": {
     "init_hook": [
