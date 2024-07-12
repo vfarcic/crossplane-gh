@@ -3,3 +3,22 @@ apiVersion: devopstoolkitseries.com/v1alpha1
 kind: GitHubClaim
 metadata:
   name: ${{ values.name }}
+spec:
+  id: ${{ values.name }}
+  parameters:
+    public: ${{ values.parameters.public }}
+    registry: ${{ values.parameters.registry }}
+    app:
+      language: ${{ values.parameters.app.language }}
+      host: ${{ values.parameters.app.host }}
+      namespace: ${{ values.parameters.app.namespace }}
+    db:
+      enabled: ${{ values.parameters.db.enabled }}
+      provider: ${{ values.parameters.db.provider }}
+      version: "${{ values.parameters.db.version }}"
+    repo:
+      user: ${{ values.parameters.repo.user }}
+    gitops:
+      enabled: ${{ values.parameters.gitops.enabled }}
+      user: ${{ values.parameters.gitops.user }}
+      repo: ${{ values.parameters.gitops.repo }}
