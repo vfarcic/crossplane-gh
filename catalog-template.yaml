@@ -86,7 +86,7 @@ spec:
             language:
               type: string # FIXME: array
               default: go
-              pattern: '^(go|js)*$'
+              enum: ["go", "js"]
             host:
               type: string
               default: my-repo.acme.com
