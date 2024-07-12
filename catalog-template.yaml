@@ -14,7 +14,7 @@ spec:
         - registry
       properties:
         public:
-          type: string # boolean
+          type: string # FIXME: boolean
           default: "true"
         registry:
           type: string
@@ -22,7 +22,7 @@ spec:
     - title: App
       properties:
         appLanguage:
-          type: string # array
+          type: string # FIXME: array
           default: go
         appHost:
           type: string
@@ -33,14 +33,14 @@ spec:
     - title: DB
       properties:
         dbEnabled:
-          type: string # boolean
+          type: string # FIXME: boolean
           default: "true"
         dbProvider:
           type: string
-          default: aws # array
+          default: aws # FIXME: array
         dbNamespace:
           type: string
-          default: a-team # array from Kubernetes
+          default: a-team # FIXME: array from Kubernetes
     - title: Repo
       properties:
         repoUser:
