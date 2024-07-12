@@ -73,3 +73,10 @@ spec:
       action: debug:log
       input:
         message: 'Hello, ${{ parameters.gitOps.user }}/${{ parameters.gitOps.repo }}!'
+    - id: fetch-template
+      action: fetch:template
+      name: Generate manifest
+      # input:
+      #   url: ./catalog-manifest-template.yaml
+      #   values:
+      #     name: ${{ parameters.name }}
