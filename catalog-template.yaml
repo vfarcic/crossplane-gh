@@ -33,23 +33,20 @@ spec:
             namespace:
               type: string
               default: a-team
-    - title: DB
-      required:
-        - dbEnabled
-        - dbProvider
-        - dbNamespace
-      properties:
-        dbEnabled:
-          type: string # FIXME: boolean
-          default: "true"
-          pattern: '^(true|false)*$'
-        dbProvider:
-          type: string
-          default: aws # FIXME: array
-          pattern: '^(aws|azure|google)*$'
-        dbNamespace:
-          type: string
-          default: a-team # FIXME: array from Kubernetes
+        db:
+          type: object
+          properties:
+            enabled:
+              type: string # FIXME: boolean
+              default: "true"
+              pattern: '^(true|false)*$'
+            provider:
+              type: string
+              default: aws # FIXME: array
+              pattern: '^(aws|azure|google)*$'
+            namespace:
+              type: string
+              default: a-team # FIXME: array from Kubernetes
     - title: Repo
       required:
         - repoUser
