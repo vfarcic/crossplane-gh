@@ -30,4 +30,16 @@ kind delete cluster
 
 gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 
+if [[ "$CLUSTER_TYPE" == "gke" ]]; then
+
+    rm $KUBECONFIG
+
+    gcloud container clusters delete dot --project $PROJECT_ID \
+        --zone us-east1-b --quiet
+
+    gcloud projects delete $PROJECT_ID --quiet
+
+fi
+
+
 gum format '## Open "Settings", click the "Delete this repository" button, and follow the instructions.'
