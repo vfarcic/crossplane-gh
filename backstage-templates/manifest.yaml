@@ -2,4 +2,4 @@
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: GitHubClaim
 metadata:
-  name: ${{ parameters.name }}
+  name: ${{ values.name }}
