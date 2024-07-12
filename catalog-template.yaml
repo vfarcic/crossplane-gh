@@ -8,7 +8,7 @@ spec:
   owner: vfarcic/crossplanme-gh
   type: service
   parameters:
-    - title: Whether the repo should be public
+    - title: General Info
       required:
         - public
         - registry
@@ -19,22 +19,17 @@ spec:
         registry:
           type: string
           default: ttl.sh
-        appLanguage:
+    - title: App
+      properties:
+        language:
           type: string
           default: go
-        appHost:
+        host:
           type: string
           default: my-repo.acme.com
-        appNamespace:
+        namespace:
           type: string
           default: a-team
-    - title: xxx
-      required:
-        - xxx
-      properties:
-        xxx:
-          type: string
-          default: "true"
   steps:
     - id: log-message
       name: Log Message
