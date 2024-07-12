@@ -33,7 +33,7 @@ spec:
               default: my-repo.acme.com
             namespace:
               type: string
-              default: a-team
+              default: a-team # FIXME: array from Kubernetes
         db:
           type: object
           properties:
@@ -45,9 +45,9 @@ spec:
               type: string
               default: aws
               enum: ["aws", "azure", "google"]
-            namespace:
+            version:
               type: string
-              default: a-team # FIXME: array from Kubernetes
+              default: "16.2"
         repo:
           type: object
           properties:
@@ -82,16 +82,20 @@ spec:
           name: ${{ parameters.name }}
           public: ${{ parameters.public }}
           registry: ${{ parameters.registry }}
-          appLanguage: ${{ parameters.app.language }}
-          appHost: ${{ parameters.app.host }}
-          appNamespace: ${{ parameters.app.namespace }}
-          dbEnabled: ${{ parameters.db.enabled }}
-          dbProvider: ${{ parameters.db.provider }}
-          dbNamespace: ${{ parameters.db.namespace }}
-          repoUser: ${{ parameters.repo.user }}
-          gitOpsEnabled: ${{ parameters.gitOps.enabled }}
-          gitOpsUser: ${{ parameters.gitOps.user }}
-          gitOpsRepo: ${{ parameters.gitOps.repo }}
+          app:
+            language: ${{ parameters.app.language }}
+            host: ${{ parameters.app.host }}
+            namespace: ${{ parameters.app.namespace }}
+          db:
+            enabled: ${{ parameters.db.enabled }}
+            provider: ${{ parameters.db.provider }}
+            version: ${{ parameters.db.version }}
+          repo:
+            user: ${{ parameters.repo.user }}
+          gitOps:
+            enabled: ${{ parameters.gitOps.enabled }}
+            user: ${{ parameters.gitOps.user }}
+            repo: ${{ parameters.gitOps.repo }}
     - id: create-pull-request
       action: publish:github:pull-request
       name: Create a pull request
