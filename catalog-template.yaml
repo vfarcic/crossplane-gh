@@ -17,6 +17,7 @@ spec:
           type: string # FIXME: boolean
           default: "true"
           pattern: '^(true|false)*$'
+          ui:field: EntityPicker
         registry:
           type: string
           default: ttl.sh
