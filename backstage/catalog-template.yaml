@@ -73,13 +73,13 @@ spec:
       action: debug:log
       input:
         message: 'Hello, ${{ parameters.gitOps.user }}/${{ parameters.gitOps.repo }}!'
-    # FIXME: Remove
-    - action: fetch:plain
-      id: fetch-plain
-      name: Fetch plain
-      input:
-        url: ./setup.sh
-        targetPath: ./setup.sh-xxx
+    # # FIXME: Remove
+    # - action: fetch:plain
+    #   id: fetch-plain
+    #   name: Fetch plain
+    #   input:
+    #     url: ./setup.sh
+    #     targetPath: ./setup.sh-xxx
     - id: fetch-template
       action: fetch:template
       name: Generate manifest
