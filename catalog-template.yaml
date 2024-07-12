@@ -17,10 +17,18 @@ spec:
           type: string # FIXME: boolean
           default: "true"
           pattern: '^(true|false)*$'
-          ui:field: EntityPicker
         registry:
           type: string
           default: ttl.sh
+        xxx:
+          type: object
+          properties:
+            a:
+              type: string
+              default: "true"
+            b:
+              type: string
+              default: "false"
     - title: App
       required:
         - appLanguage
