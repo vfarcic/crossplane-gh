@@ -21,7 +21,13 @@ spec:
           default: ttl.sh
         appLanguage:
           type: string
-          default: "go"
+          default: go
+        appHost:
+          type: string
+          default: my-repo.acme.com
+        appNamespace:
+          type: string
+          default: a-team
     - title: xxx
       required:
         - xxx
