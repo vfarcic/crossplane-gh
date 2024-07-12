@@ -20,6 +20,10 @@ spec:
           type: string
           default: ttl.sh
     - title: App
+      required:
+        - appLanguage
+        - appHost
+        - appNamespace
       properties:
         appLanguage:
           type: string # FIXME: array
@@ -31,10 +35,15 @@ spec:
           type: string
           default: a-team
     - title: DB
+      required:
+        - dbEnabled
+        - dbProvider
+        - dbNamespace
       properties:
         dbEnabled:
           type: string # FIXME: boolean
           default: "true"
+          pattern: ^(?i)(true|false)$
         dbProvider:
           type: string
           default: aws # FIXME: array
@@ -42,11 +51,18 @@ spec:
           type: string
           default: a-team # FIXME: array from Kubernetes
     - title: Repo
+      required:
+        - repoUser
       properties:
         repoUser:
           type: string
           default: vfarcic
     - title: GitOps
+    - title: Repo
+      required:
+        - gitOpsEnabled
+        - gitOpsUser
+        - gitOpsRepo
       properties:
         gitOpsEnabled:
           type: string
