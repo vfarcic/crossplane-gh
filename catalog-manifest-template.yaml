@@ -2,4 +2,4 @@
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: GitHubClaim
 metadata:
-  name: crossplane-gh-demo
+  name: ${{ parameters.name }}

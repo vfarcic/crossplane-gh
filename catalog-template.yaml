@@ -10,9 +10,10 @@ spec:
   parameters:
     - title: Service Definition
       required:
-        - public
-        - registry
+        - name
       properties:
+        name:
+          type: string
         public:
           type: string # FIXME: boolean
           default: "true"
