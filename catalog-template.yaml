@@ -79,3 +79,11 @@ spec:
         url: ./catalog-manifest-template.yaml
       #   values:
       #     name: ${{ parameters.name }}
+    - id: create-pull-request
+      action: publish:github:pull-request
+      name: Create a pull request
+      input:
+        repoUrl: 'github.com?repo=crossplane-gh&owner=vfarcic'
+        branchName: xxx
+        title: App manifest # FIXME: Add app name
+        description: "This pull request creates or update the app manifest" # FIXME: Add app name
