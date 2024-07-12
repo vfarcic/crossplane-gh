@@ -8,13 +8,14 @@ spec:
   owner: vfarcic/crossplanme-gh
   type: service
   parameters:
-    - title: You are about to say hello to your first Backstage Template
+    - title: Whether the repo should be public
       required:
         - public
       properties:
         public:
+          type: boolean
+        something:
           type: string
-
   steps:
     - id: log-message
       name: Log Message
