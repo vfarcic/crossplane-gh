@@ -54,7 +54,7 @@ spec:
             user:
               type: string
               default: vfarcic
-        gitOps:
+        gitops:
           type: object
           properties:
             enabled:
@@ -72,12 +72,13 @@ spec:
       name: Log Message
       action: debug:log
       input:
-        message: 'Hello, ${{ parameters.gitOps.user }}/${{ parameters.gitOps.repo }}!'
+        message: 'Hello, ${{ parameters.gitops.user }}/${{ parameters.gitops.repo }}!'
     - id: fetch-template
       action: fetch:template
       name: Generate manifest
       input:
         url: ./backstage-templates
+        targetPath: ./git-repos
         values:
           name: ${{ parameters.name }}
           public: ${{ parameters.public }}
@@ -92,15 +93,22 @@ spec:
             version: ${{ parameters.db.version }}
           repo:
             user: ${{ parameters.repo.user }}
-          gitOps:
-            enabled: ${{ parameters.gitOps.enabled }}
-            user: ${{ parameters.gitOps.user }}
-            repo: ${{ parameters.gitOps.repo }}
+          gitops:
+            enabled: ${{ parameters.gitops.enabled }}
+            user: ${{ parameters.gitops.user }}
+            repo: ${{ parameters.gitops.repo }}
+    - id: rename-manifest
+      action: fs:rename
+      name: Rename files
+      input:
+        files:
+          - from: ./git-repos/manifest.yaml
+            to: ./git-repos/xxx.yaml
     - id: create-pull-request
       action: publish:github:pull-request
       name: Create a pull request
       input:
-        repoUrl: github.com?repo=${{ parameters.gitOps.repo }}&owner=${{ parameters.gitOps.user }}
+        repoUrl: github.com?repo=${{ parameters.gitops.repo }}&owner=${{ parameters.gitops.user }}
         branchName: ${{ parameters.name }}
         title: ${{ parameters.name }} app manifest
         description: This pull request creates or update the ${{ parameters.name }} app manifest
