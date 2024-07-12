@@ -8,7 +8,7 @@ spec:
   owner: vfarcic/crossplanme-gh
   type: service
   parameters:
-    - title: General Info
+    - title: General Info 111
       required:
         - public
         - registry
