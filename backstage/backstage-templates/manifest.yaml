@@ -6,19 +6,19 @@ metadata:
 spec:
   id: ${{ values.name }}
   parameters:
-    public: ${{ values.parameters.public }}
-    registry: ${{ values.parameters.registry }}
+    public: ${{ values.public }}
+    registry: ${{ values.registry }}
     app:
-      language: ${{ values.parameters.app.language }}
-      host: ${{ values.parameters.app.host }}
-      namespace: ${{ values.parameters.app.namespace }}
+      language: ${{ values.app.language }}
+      host: ${{ values.app.host }}
+      namespace: ${{ values.app.namespace }}
     db:
-      enabled: ${{ values.parameters.db.enabled }}
-      provider: ${{ values.parameters.db.provider }}
-      version: "${{ values.parameters.db.version }}"
+      enabled: ${{ values.db.enabled }}
+      provider: ${{ values.db.provider }}
+      version: "${{ values.db.version }}"
     repo:
-      user: ${{ values.parameters.repo.user }}
+      user: ${{ values.repo.user }}
     gitops:
-      enabled: ${{ values.parameters.gitops.enabled }}
-      user: ${{ values.parameters.gitops.user }}
-      repo: ${{ values.parameters.gitops.repo }}
+      enabled: ${{ values.gitops.enabled }}
+      user: ${{ values.gitops.user }}
+      repo: ${{ values.gitops.repo }}
