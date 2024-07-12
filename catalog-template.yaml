@@ -75,7 +75,7 @@ spec:
     - id: fetch-template
       action: fetch:template
       name: Generate manifest
-      # input:
-      #   url: ./catalog-manifest-template.yaml
+      input:
+        url: ./catalog-manifest-template.yaml
       #   values:
       #     name: ${{ parameters.name }}
