@@ -8,7 +8,7 @@ spec:
   owner: vfarcic/crossplanme-gh
   type: service
   parameters:
-    - title: Service Definition 4
+    - title: Service Definition 5
       required:
         - name
       properties:
