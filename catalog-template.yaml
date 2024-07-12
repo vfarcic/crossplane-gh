@@ -26,7 +26,7 @@ spec:
             language:
               type: string # FIXME: array
               default: go
-              pattern: '^(go|js)*$'
+              enum: ["go", "js"]
             host:
               type: string
               default: my-repo.acme.com
@@ -72,57 +72,3 @@ spec:
       action: debug:log
       input:
         message: 'Hello, ${{ parameters.gitOps.user }}/${{ parameters.gitOps.repo }}!'
-
-        public:
-          type: string # FIXME: boolean
-          default: "true"
-          pattern: '^(true|false)*$'
-        registry:
-          type: string
-          default: ttl.sh
-        app:
-          type: object
-          properties:
-            language:
-              type: string # FIXME: array
-              default: go
-              enum: ["go", "js"]
-            host:
-              type: string
-              default: my-repo.acme.com
-            namespace:
-              type: string
-              default: a-team
-        db:
-          type: object
-          properties:
-            enabled:
-              type: string # FIXME: boolean
-              default: "true"
-              pattern: '^(true|false)*$'
-            provider:
-              type: string
-              default: aws # FIXME: array
-              pattern: '^(aws|azure|google)*$'
-            namespace:
-              type: string
-              default: a-team # FIXME: array from Kubernetes
-        repo:
-          type: object
-          properties:
-            user:
-              type: string
-              default: vfarcic
-        gitOps:
-          type: object
-          properties:
-            enabled:
-              type: string
-              default: "true"
-              pattern: '^(true|false)*$'
-            user:
-              type: string
-              default: vfarcic
-            repo:
-              type: string
-              default: crossplane-gh
