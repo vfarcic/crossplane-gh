@@ -15,10 +15,13 @@ spec:
       properties:
         public:
           type: string
+          default: "true"
         registry:
           type: string
+          default: ttl.sh
         appLanguage:
           type: string
+          default: "go"
   steps:
     - id: log-message
       name: Log Message
