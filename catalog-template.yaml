@@ -11,10 +11,13 @@ spec:
     - title: Whether the repo should be public
       required:
         - public
+        - registry
       properties:
         public:
-          type: boolean
-        something:
+          type: string
+        registry:
+          type: string
+        appLanguage:
           type: string
   steps:
     - id: log-message
