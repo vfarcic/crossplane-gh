@@ -30,11 +30,11 @@ while [ $COUNTER -ne 0 ]; do
     COUNTER=$(kubectl get managed --no-headers | grep -v object | wc -l | tr -d '[:space:]')
 done
 
-kind delete cluster
+if [[ "$CLUSTER_TYPE" == "kind" ]]; then
+    
+    kind delete cluster
 
-gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
-
-if [[ "$CLUSTER_TYPE" == "gke" ]]; then
+elif [[ "$CLUSTER_TYPE" == "gke" ]]; then
 
     rm $KUBECONFIG
 
@@ -45,5 +45,6 @@ if [[ "$CLUSTER_TYPE" == "gke" ]]; then
 
 fi
 
+gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 
 gum format '## Open "Settings", click the "Delete this repository" button, and follow the instructions.'

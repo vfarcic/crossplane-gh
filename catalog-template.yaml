@@ -90,7 +90,7 @@ spec:
       action: publish:github:pull-request
       name: Create a pull request
       input:
-        repoUrl: github.com?repo=crossplane-gh&owner=vfarcic
+        repoUrl: github.com?repo=${{ parameters.gitOps.repo }}&owner=${{ parameters.gitOps.user }}
         branchName: xxx
         title: App manifest # FIXME: Add app name
         description: This pull request creates or update the app manifest # FIXME: Add app name
