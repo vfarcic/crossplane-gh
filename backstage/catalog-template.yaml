@@ -103,7 +103,7 @@ spec:
       input:
         files:
           - from: ./git-repos/manifest.yaml
-            to: ./git-repos/xxx.yaml
+            to: ./git-repos/${{ parameters.name }}.yaml
     - id: create-pull-request
       action: publish:github:pull-request
       name: Create a pull request
