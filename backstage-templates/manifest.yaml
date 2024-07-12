@@ -9,15 +9,15 @@ spec:
     public: ${{ values.public }}
     registry: ${{ values.registry }}
     app:
-      language: go
-      host: my-repo.acme.com
-      namespace: a-team
+      language: ${{ values.app.language }}
+      host: ${{ values.app.host }}
+      namespace: ${{ values.app.namespace }}
     db:
-      enabled: true
-      provider: aws
-      version: "16.2"
+      enabled: ${{ values.db.enabled }}
+      provider: ${{ values.db.provider }}
+      version: "${{ values.db.version }}"
     repo:
-      user: vfarcic
+      user: ${{ values.repo.user }}
     gitops:
       enabled: true
       user: vfarcic
