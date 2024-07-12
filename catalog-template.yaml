@@ -14,22 +14,49 @@ spec:
         - registry
       properties:
         public:
-          type: string
+          type: string # boolean
           default: "true"
         registry:
           type: string
           default: ttl.sh
     - title: App
       properties:
-        language:
-          type: string
+        appLanguage:
+          type: string # array
           default: go
-        host:
+        appHost:
           type: string
           default: my-repo.acme.com
-        namespace:
+        appNamespace:
           type: string
           default: a-team
+    - title: DB
+      properties:
+        dbEnabled:
+          type: string # boolean
+          default: "true"
+        dbProvider:
+          type: string
+          default: aws # array
+        dbNamespace:
+          type: string
+          default: a-team # array from Kubernetes
+    - title: Repo
+      properties:
+        repoUser:
+          type: string
+          default: vfarcic
+    - title: GitOps
+      properties:
+        gitOpsEnabled:
+          type: string
+          default: "true"
+        gitOpsUser:
+          type: string
+          default: vfarcic
+        gitOpsRepo:
+          type: string
+          default: crossplane-gh
   steps:
     - id: log-message
       name: Log Message
