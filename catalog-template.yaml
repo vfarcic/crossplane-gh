@@ -47,29 +47,24 @@ spec:
             namespace:
               type: string
               default: a-team # FIXME: array from Kubernetes
-    - title: Repo
-      required:
-        - repoUser
-      properties:
-        repoUser:
-          type: string
-          default: vfarcic
-    - title: GitOps
-    - title: Repo
-      required:
-        - gitOpsEnabled
-        - gitOpsUser
-        - gitOpsRepo
-      properties:
-        gitOpsEnabled:
-          type: string
-          default: "true"
-        gitOpsUser:
-          type: string
-          default: vfarcic
-        gitOpsRepo:
-          type: string
-          default: crossplane-gh
+        repo:
+          type: object
+          properties:
+            user:
+              type: string
+              default: vfarcic
+        gitOps:
+          type: object
+          properties:
+            gitOpsEnabled:
+              type: string
+              default: "true"
+            gitOpsUser:
+              type: string
+              default: vfarcic
+            gitOpsRepo:
+              type: string
+              default: crossplane-gh
   steps:
     - id: log-message
       name: Log Message
