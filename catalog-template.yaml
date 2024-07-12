@@ -1,0 +1,23 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: dot-github-template
+  title: dot-github
+  description: Create and Manage GitHub repositories
+spec:
+  owner: vfarcic/crossplanme-gh
+  type: service
+  parameters:
+    - title: You are about to say hello to your first Backstage Template
+      required:
+        - public
+      properties:
+        public:
+          type: string
+
+  steps:
+    - id: log-message
+      name: Log Message
+      action: debug:log
+      input:
+        message: 'Hello, ${{ parameters.name }}!'
