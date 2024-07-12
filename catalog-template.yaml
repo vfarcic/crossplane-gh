@@ -24,7 +24,7 @@ spec:
           type: object
           properties:
             language:
-              type: string # FIXME: array
+              type: string
               default: go
               enum: ["go", "js"]
             host:
@@ -42,8 +42,9 @@ spec:
               pattern: '^(true|false)*$'
             provider:
               type: string
-              default: aws # FIXME: array
-              pattern: '^(aws|azure|google)*$'
+              default: aws
+              enum: ["aws", "azure", "google"]
+              pattern: '^()*$'
             namespace:
               type: string
               default: a-team # FIXME: array from Kubernetes
