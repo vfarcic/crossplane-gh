@@ -8,7 +8,7 @@ spec:
   owner: vfarcic/crossplanme-gh
   type: service
   parameters:
-    - title: General Info 222
+    - title: Service Definition
       required:
         - public
         - registry
@@ -44,7 +44,6 @@ spec:
               type: string
               default: aws
               enum: ["aws", "azure", "google"]
-              pattern: '^()*$'
             namespace:
               type: string
               default: a-team # FIXME: array from Kubernetes
