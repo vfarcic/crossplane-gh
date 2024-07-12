@@ -1,0 +1,24 @@
+---
+apiVersion: devopstoolkitseries.com/v1alpha1
+kind: GitHubClaim
+metadata:
+  name: x4
+spec:
+  id: x4
+  parameters:
+    public: 
+    registry: 
+    app:
+      language: 
+      host: 
+      namespace: 
+    db:
+      enabled: 
+      provider: 
+      version: ""
+    repo:
+      user: 
+    gitops:
+      enabled: 
+      user: 
+      repo: 
