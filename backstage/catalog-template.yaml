@@ -73,25 +73,18 @@ spec:
       action: debug:log
       input:
         message: 'Hello, ${{ parameters.gitOps.user }}/${{ parameters.gitOps.repo }}!'
-    # # FIXME: Remove
-    # - action: fetch:plain
-    #   id: fetch-plain
-    #   name: Fetch plain
-    #   input:
-    #     url: ./setup.sh
-    #     targetPath: ./setup.sh-xxx
     - id: fetch-template
       action: fetch:template
       name: Generate manifest
       input:
         url: ./backstage-templates
-      #   values:
-      #     name: ${{ parameters.name }}
+        values:
+          name: ${{ parameters.name }}
     - id: create-pull-request
       action: publish:github:pull-request
       name: Create a pull request
       input:
         repoUrl: github.com?repo=${{ parameters.gitOps.repo }}&owner=${{ parameters.gitOps.user }}
-        branchName: xxx
+        branchName: ${{ parameters.name }}
         title: App manifest # FIXME: Add app name
         description: This pull request creates or update the app manifest # FIXME: Add app name
