@@ -15,9 +15,9 @@ spec:
         name:
           type: string
         public:
-          type: string # FIXME: boolean
+          type: string
           default: "true"
-          pattern: '^(true|false)*$'
+          enum: ["true", "false"]
         registry:
           type: string
           default: ttl.sh
@@ -38,9 +38,9 @@ spec:
           type: object
           properties:
             enabled:
-              type: string # FIXME: boolean
+              type: string
               default: "true"
-              pattern: '^(true|false)*$'
+              enum: ["true", "false"]
             provider:
               type: string
               default: aws
