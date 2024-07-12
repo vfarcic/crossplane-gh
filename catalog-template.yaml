@@ -56,13 +56,14 @@ spec:
         gitOps:
           type: object
           properties:
-            gitOpsEnabled:
+            enabled:
               type: string
               default: "true"
-            gitOpsUser:
+              pattern: '^(true|false)*$'
+            user:
               type: string
               default: vfarcic
-            gitOpsRepo:
+            repo:
               type: string
               default: crossplane-gh
   steps:
