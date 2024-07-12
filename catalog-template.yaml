@@ -29,6 +29,7 @@ spec:
         appLanguage:
           type: string # FIXME: array
           default: go
+          pattern: '^(go|js)*$'
         appHost:
           type: string
           default: my-repo.acme.com
@@ -44,9 +45,11 @@ spec:
         dbEnabled:
           type: string # FIXME: boolean
           default: "true"
+          pattern: '^(true|false)*$'
         dbProvider:
           type: string
           default: aws # FIXME: array
+          pattern: '^(aws|azure|google)*$'
         dbNamespace:
           type: string
           default: a-team # FIXME: array from Kubernetes
