@@ -84,7 +84,7 @@ spec:
       action: fetch:template
       name: Generate manifest
       input:
-        url: ./catalog-manifest-template.yaml
+        url: ./backstage-templates
       #   values:
       #     name: ${{ parameters.name }}
     - id: create-pull-request
