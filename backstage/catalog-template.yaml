@@ -8,7 +8,7 @@ spec:
   owner: vfarcic/crossplanme-gh
   type: service
   parameters:
-    - title: Service Definition 5
+    - title: Service Definition 6
       required:
         - name
       properties:
@@ -86,5 +86,5 @@ spec:
       input:
         repoUrl: github.com?repo=${{ parameters.gitOps.repo }}&owner=${{ parameters.gitOps.user }}
         branchName: ${{ parameters.name }}
-        title: App manifest # FIXME: Add app name
-        description: This pull request creates or update the app manifest # FIXME: Add app name
+        title: ${{ parameters.name }} app manifest
+        description: This pull request creates or update the ${{ parameters.name }} app manifest
