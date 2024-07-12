@@ -12,11 +12,15 @@ rm -f apps/*.yaml
 
 rm -f git-repos/*.yaml
 
+set +e
+
 git add .
 
 git commit -m "Destroy"
 
 git push
+
+set -e
 
 COUNTER=$(kubectl get managed --no-headers | grep -v object | wc -l | tr -d '[:space:]')
 
