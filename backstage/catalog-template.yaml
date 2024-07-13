@@ -111,4 +111,4 @@ spec:
         repoUrl: github.com?repo=${{ parameters.gitops.repo }}&owner=${{ parameters.gitops.user }}
         branchName: init-${{ parameters.name }}
         title: "Init: ${{ parameters.name }} app manifest"
-        description: This pull request creates or update the ${{ parameters.name }} app manifest
+        description: This pull request creates or update the ${{ parameters.name }} app manifest [skip ci]
