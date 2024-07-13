@@ -24,6 +24,10 @@ spec:
             file: db.yaml
         - assert:
             file: db-assert.yaml
+        - patch:
+            file: backstage.yaml
+        - assert:
+            file: backstage-assert.yaml
     #   catch:
     #     - get:
     #         resource: managed

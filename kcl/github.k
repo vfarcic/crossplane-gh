@@ -68,9 +68,9 @@ items = [
         _body = """\
 1. Open https://github.com/${oxr.spec.parameters.repo.user}/${oxr.spec.id}/settings/actions and enable `Read and write permissions`.
 2. Open https://github.com/${oxr.spec.parameters.repo.user}/${oxr.spec.id}/settings/secrets/actions and add `PAT_TOKEN` with the GitHub token to `Repository secrets`.
-3. Review, approve or modify, merge, enjoy.
+3. Review, modify (optional), merge, enjoy.
 """
-        if oxr.spec.parameters?.gitops?.enabled:
+        if oxr.spec.parameters?.gitops?.enabled and not oxr.spec.parameters?.backstage?.enabled:
             _body = _body + """\
 4. Execute the `gitops` workflow to include the app into the GitOps repository.
 """
@@ -110,6 +110,15 @@ items = [
 }
 """
         _branch = False
+    }
+    repositoryFile {
+        _name = "readme"
+        _file = "README.md"
+        _content = """\
+# ${oxr.spec.id}
+
+Silly description
+"""
     }
     repositoryFile {
         _name = "app"
@@ -237,6 +246,30 @@ jobs:
           repository: ${oxr.spec.parameters.gitops.user}/${oxr.spec.parameters.gitops.repo}
           force: true
 """.replace("[[", "{{").replace("]]", "}}")
+            _branch = False
+        }
+    if oxr.spec.parameters?.backstage?.enabled:
+        repositoryFile {
+            _name = "backstage-catalog-info"
+            _file = "catalog-info.yaml"
+            _content = """\
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${oxr.spec.id}
+  description: Silly description
+  annotations:
+    github.com/project-slug: ${oxr.spec.parameters.repo.user}/${oxr.spec.id}
+    backstage.io/techdocs-ref: dir:. 
+    backstage.io/kubernetes-id: dot
+    backstage.io/kubernetes-namespace: git-repos
+    backstage.io/kubernetes-label-selector: app.kubernetes.io/name=${oxr.spec.id}
+spec:
+  type: backend
+  lifecycle: production
+  owner: ${oxr.spec.parameters.repo.user}/${oxr.spec.id}
+  system: DevOpsCatalog
+"""
         }
     if oxr.spec.parameters.app.language == "go":
         repositoryFile {

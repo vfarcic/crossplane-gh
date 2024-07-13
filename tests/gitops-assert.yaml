@@ -74,7 +74,6 @@ spec:
     file: .github/workflows/gitops.yaml
     repositorySelector:
       matchControllerRef: true
-    branch: main
 ---
 apiVersion: repo.github.upbound.io/v1alpha1
 kind: PullRequest
@@ -88,7 +87,7 @@ spec:
       1. Open https://github.com/my-user/my-repo/settings/actions and enable `Read and write permissions`.
       2. Open https://github.com/my-user/my-repo/settings/secrets/actions and add `PAT_TOKEN` with the GitHub token to `Repository secrets`.
       3. Review, modify (optional), merge, enjoy.
-      4. Execute the `gitops` workflow to include the app into the GitOps repository (unless you're using Backstage).
+      4. Execute the `gitops` workflow to include the app into the GitOps repository.
     title: "Initial"
     maintainerCanModify: true
     baseRepositorySelector:

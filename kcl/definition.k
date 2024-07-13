@@ -101,6 +101,16 @@ spec = {
                                             }
                                         }
                                     }
+                                    backstage = {
+                                        type = "object"
+                                        properties = {
+                                            enabled = {
+                                                type = "boolean"
+                                                description = "Whether to enable Backstage."
+                                                default = False
+                                            }
+                                        }
+                                    }
                                     tools = {
                                         type = "object"
                                         properties = {

@@ -52,9 +52,6 @@ spec:
     name: my-repo-app
   - apiVersion: repo.github.upbound.io/v1alpha1
     kind: RepositoryFile
-    name: my-repo-backstage-catalog-info
-  - apiVersion: repo.github.upbound.io/v1alpha1
-    kind: RepositoryFile
     name: my-repo-ci
   - apiVersion: repo.github.upbound.io/v1alpha1
     kind: RepositoryFile
@@ -438,37 +435,6 @@ spec:
 apiVersion: repo.github.upbound.io/v1alpha1
 kind: RepositoryFile
 metadata:
-  name: my-repo-backstage-catalog-info
-spec:
-  forProvider:
-    commitAuthor: Crossplane
-    commitEmail: github-provider@crossplane.io
-    commitMessage: "Crossplane rocks [skip ci]"
-    content: |
-      apiVersion: backstage.io/v1alpha1
-      kind: Component
-      metadata:
-        name: my-repo
-        description: Silly description
-        annotations:
-          github.com/project-slug: my-user/my-repo
-          backstage.io/techdocs-ref: dir:. 
-          backstage.io/kubernetes-id: dot
-          backstage.io/kubernetes-namespace: git-repos
-          backstage.io/kubernetes-label-selector: app.kubernetes.io/name=my-repo
-      spec:
-        type: backend
-        lifecycle: production
-        owner: my-user/my-repo
-        system: DevOpsCatalog
-    file: catalog-info.yaml
-    repositorySelector:
-      matchControllerRef: true
-    branch: init
----
-apiVersion: repo.github.upbound.io/v1alpha1
-kind: RepositoryFile
-metadata:
   name: my-repo-ci
 spec:
   forProvider:
@@ -531,8 +497,3 @@ spec:
     maintainerCanModify: true
     baseRepositorySelector:
       matchControllerRef: true
-  managementPolicies:
-    - Create
-    - Observe
-    - Update
-    - LateInitialize
