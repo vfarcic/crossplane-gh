@@ -22,3 +22,5 @@ spec:
       enabled: ${{ values.gitops.enabled }}
       user: ${{ values.gitops.user }}
       repo: ${{ values.gitops.repo }}
+    backstage:
+      enabled: true
