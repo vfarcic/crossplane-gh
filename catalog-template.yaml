@@ -5,7 +5,7 @@ metadata:
   title: dot-github
   description: Create and Manage GitHub repositories
 spec:
-  owner: vfarcic/crossplanme-gh
+  owner: vfarcic/crossplane-gh
   type: service
   parameters:
     - title: Service Definition
