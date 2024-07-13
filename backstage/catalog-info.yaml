@@ -12,6 +12,6 @@ metadata:
 spec:
   type: infra
   lifecycle: production
-  owner: vfarcic/crossplanme-gh
+  owner: vfarcic/crossplane-gh
   system: DevOpsCatalog
 

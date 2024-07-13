@@ -109,6 +109,6 @@ spec:
       name: Create a pull request
       input:
         repoUrl: github.com?repo=${{ parameters.gitops.repo }}&owner=${{ parameters.gitops.user }}
-        branchName: ${{ parameters.name }}
-        title: ${{ parameters.name }} app manifest
+        branchName: init-${{ parameters.name }}
+        title: "Init: ${{ parameters.name }} app manifest"
         description: This pull request creates or update the ${{ parameters.name }} app manifest
