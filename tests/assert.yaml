@@ -513,7 +513,7 @@ spec:
     file: .github/workflows/ci.yaml
     repositorySelector:
       matchControllerRef: true
-    branch: main
+    branch: init
 ---
 apiVersion: repo.github.upbound.io/v1alpha1
 kind: PullRequest
@@ -531,3 +531,8 @@ spec:
     maintainerCanModify: true
     baseRepositorySelector:
       matchControllerRef: true
+  managementPolicies:
+    - Create
+    - Observe
+    - Update
+    - LateInitialize
