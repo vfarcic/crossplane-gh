@@ -59,6 +59,24 @@ elif [[ "$CLUSTER_TYPE" == "gke" ]]; then
         --num-nodes 2 --enable-network-policy \
         --no-enable-autoupgrade
 
+    helm upgrade --install traefik traefik \
+        --repo https://helm.traefik.io/traefik \
+        --namespace traefik --create-namespace --wait
+
+    export INGRESS_HOST=$(kubectl --namespace traefik \
+        get service traefik \
+        --output jsonpath="{.status.loadBalancer.ingress[0].ip}")
+
+    echo "export INGRESS_HOST=$INGRESS_HOST" >> .env
+
+    yq --inplace \
+        ".server.ingress.enabled = true" \
+        argocd-values.yaml
+
+    yq --inplace \
+        ".server.ingress.hostname = \"argocd.$INGRESS_HOST.nip.io\"" \
+        argocd-values.yaml
+
 fi
 
 
@@ -159,3 +177,10 @@ yq --inplace \
 yq --inplace \
     ".spec.parameters.gitops.user = \"$GITHUB_OWNER\"" \
     examples/repo.yaml
+
+echo "## Get Argo CD token
+1. Open http://argocd.$INGRESS_HOST.nip.io/settings/accounts/admin
+2. Login using username *admin* and password *admin123*
+3. Click the *Generate New* button" \
+    | gum format
+

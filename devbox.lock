@@ -1,6 +1,54 @@
 {
   "lockfile_version": "1",
   "packages": {
+    "argocd@2.11.4": {
+      "last_modified": "2024-07-07T16:08:25Z",
+      "resolved": "github:NixOS/nixpkgs/ab82a9612aa45284d4adf69ee81871a389669a9e#argocd",
+      "source": "devbox-search",
+      "version": "2.11.4",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/qkk8v68a4d1qnh1d0iwzr58nk0zgnsc5-argocd-2.11.4",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/qkk8v68a4d1qnh1d0iwzr58nk0zgnsc5-argocd-2.11.4"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/16j9yzfjlhmj2dcqv1bh8lc7knjzh1m4-argocd-2.11.4",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/16j9yzfjlhmj2dcqv1bh8lc7knjzh1m4-argocd-2.11.4"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/sr2jjs0ya7jv71jpiw9h7pj430rh0j6q-argocd-2.11.4",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/sr2jjs0ya7jv71jpiw9h7pj430rh0j6q-argocd-2.11.4"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/vm5h22dgzwc9yl2rz6abcg3ccdxw1zzl-argocd-2.11.4",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/vm5h22dgzwc9yl2rz6abcg3ccdxw1zzl-argocd-2.11.4"
+        }
+      }
+    },
     "crossplane-cli@1.16.0": {
       "last_modified": "2024-06-12T20:55:33Z",
       "resolved": "github:NixOS/nixpkgs/a9858885e197f984d92d7fe64e9fff6b2e488d40#crossplane-cli",

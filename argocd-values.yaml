@@ -9,4 +9,8 @@ configs:
     "server.insecure": true
 server:
   extraArgs:
-  - --insecure
+    - --insecure
+  ingress:
+    enabled: false
+    ingressClassName: traefik
+    hostname: argocd.34.139.93.214.nip.io
