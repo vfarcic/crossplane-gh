@@ -75,6 +75,9 @@ spec:
     kind: RepositoryFile
     name: my-repo-main-go
   - apiVersion: repo.github.upbound.io/v1alpha1
+    kind: RepositoryFile
+    name: my-repo-readme
+  - apiVersion: repo.github.upbound.io/v1alpha1
     kind: Repository
     name: my-repo
 ---
@@ -139,6 +142,24 @@ spec:
         ctx.String(http.StatusOK, "This is a silly demo")
       }
     file: main.go
+    repositorySelector:
+      matchControllerRef: true
+    branch: init
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: RepositoryFile
+metadata:
+  name: my-repo-readme
+spec:
+  forProvider:
+    commitAuthor: Crossplane
+    commitEmail: github-provider@crossplane.io
+    commitMessage: "Crossplane rocks [skip ci]"
+    content: |
+      # my-repo
+
+      Silly description
+    file: README.md
     repositorySelector:
       matchControllerRef: true
     branch: init
