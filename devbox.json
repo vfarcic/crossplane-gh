@@ -16,7 +16,9 @@
     "gum@0.14.1",
     "path:gcloud#google-cloud-sdk",
     "eksctl@0.184.0",
-    "argocd@2.11.4"
+    "argocd@2.11.4",
+    "jq@1.7.1",
+    "kubectl-tree@0.4.3"
   ],
   "shell": {
     "init_hook": [

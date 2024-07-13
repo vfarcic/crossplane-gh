@@ -40,7 +40,6 @@ spec:
         description: Silly description
         annotations:
           github.com/project-slug: my-user/my-repo
-          backstage.io/techdocs-ref: dir:. 
           backstage.io/kubernetes-id: dot
           backstage.io/kubernetes-namespace: git-repos
           backstage.io/kubernetes-label-selector: app.kubernetes.io/name=my-repo
@@ -70,3 +69,33 @@ spec:
     maintainerCanModify: true
     baseRepositorySelector:
       matchControllerRef: true
+---
+apiVersion: repo.github.upbound.io/v1alpha1
+kind: RepositoryFile
+metadata:
+  name: my-repo-app
+spec:
+  forProvider:
+    commitAuthor: Crossplane
+    commitEmail: github-provider@crossplane.io
+    commitMessage: "Crossplane rocks [skip ci]"
+    content: |
+      apiVersion: devopstoolkitseries.com/v1alpha1
+      kind: AppClaim
+      metadata:
+        name: my-repo
+      spec:
+        id: my-repo
+        compositionSelector:
+          matchLabels:
+            type: backend
+            location: local
+        parameters:
+          namespace: a-team
+          image: my-registry/me/my-repo
+          port: 8080
+          host: my-repo.acme.com
+    file: k8s/appclaim.yaml
+    repositorySelector:
+      matchControllerRef: true
+    branch: init

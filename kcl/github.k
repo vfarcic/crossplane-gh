@@ -260,7 +260,6 @@ metadata:
   description: Silly description
   annotations:
     github.com/project-slug: ${oxr.spec.parameters.repo.user}/${oxr.spec.id}
-    backstage.io/techdocs-ref: dir:. 
     backstage.io/kubernetes-id: dot
     backstage.io/kubernetes-namespace: git-repos
     backstage.io/kubernetes-label-selector: app.kubernetes.io/name=${oxr.spec.id}
