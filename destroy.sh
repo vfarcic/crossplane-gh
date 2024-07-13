@@ -16,7 +16,7 @@ set +e
 
 git add .
 
-git commit -m "Destroy"
+git commit -m "Destroy [skip ci]"
 
 git push
 
