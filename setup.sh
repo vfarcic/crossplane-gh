@@ -126,7 +126,8 @@ stringData:
 
 kubectl apply --filename providers/provider-github-config.yaml
 
-echo "## Which Hyperscaler do you want to use?" | gum format
+echo "## Which Hyperscaler do you want to use for PostgreSQL (select 'none' to continue without database)?" \
+    | gum format
 HYPERSCALER=$(gum choose "aws" "google" "none")
 echo "export HYPERSCALER=$HYPERSCALER" >> .env
 
@@ -157,8 +158,6 @@ elif [[ "$HYPERSCALER" == "google" ]]; then
     PROJECT_ID_DB=dot-db-$(date +%Y%m%d%H%M%S)
     echo "export PROJECT_ID_DB=$PROJECT_ID_DB" >> .env
 
-    yq --inplace ".production.google.projectId = \"${PROJECT_ID_DB}\"" settings.yaml
-
     gcloud projects create ${PROJECT_ID_DB}
 
     echo "## Open https://console.cloud.google.com/billing/enable?project=$PROJECT_ID_DB  in a browser and *ENABLE* the API." \
@@ -184,6 +183,14 @@ elif [[ "$HYPERSCALER" == "google" ]]; then
 
     gcloud iam service-accounts keys create gcp-creds.json \
         --project $PROJECT_ID_DB --iam-account $SA
+
+    kubectl --namespace crossplane-system create secret generic gcp-creds \
+        --from-file creds=./gcp-creds.json
+
+    yq --inplace ".spec.projectID = \"$PROJECT_ID_DB\"" \
+        providers/provider-google-config.yaml
+
+    kubectl apply --filename providers/provider-google-config.yaml
 
 else
 
@@ -211,8 +218,8 @@ kubectl apply --filename argocd-apps.yaml
 
 yq --inplace \
     ".spec.parameters.repo.user = \"$GITHUB_OWNER\"" \
-    examples/repo.yaml
+    examples/repo-$HYPERSCALER.yaml
 
 yq --inplace \
     ".spec.parameters.gitops.user = \"$GITHUB_OWNER\"" \
-    examples/repo.yaml
+    examples/repo-$HYPERSCALER.yaml
