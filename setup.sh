@@ -127,7 +127,8 @@ stringData:
 kubectl apply --filename providers/provider-github-config.yaml
 
 echo "## Which Hyperscaler do you want to use?" | gum format
-HYPERSCALER=$(gum choose "aws" "none")
+HYPERSCALER=$(gum choose "aws" "google" "none")
+echo "export HYPERSCALER=$HYPERSCALER" >> .env
 
 if [[ "$HYPERSCALER" == "aws" ]]; then
 
@@ -150,6 +151,39 @@ if [[ "$HYPERSCALER" == "aws" ]]; then
         --from-file creds=./aws-creds.conf
 
     kubectl apply --filename providers/provider-aws-config.yaml
+
+elif [[ "$HYPERSCALER" == "google" ]]; then
+
+    PROJECT_ID_DB=dot-db-$(date +%Y%m%d%H%M%S)
+    echo "export PROJECT_ID_DB=$PROJECT_ID_DB" >> .env
+
+    yq --inplace ".production.google.projectId = \"${PROJECT_ID_DB}\"" settings.yaml
+
+    gcloud projects create ${PROJECT_ID_DB}
+
+    echo "## Open https://console.cloud.google.com/billing/enable?project=$PROJECT_ID_DB  in a browser and *ENABLE* the API." \
+        | gum format
+
+    gum input --placeholder "Press the enter key to continue."
+
+    echo "## Open https://console.cloud.google.com/apis/library/sqladmin.googleapis.com?project=$PROJECT_ID_DB in a browser and *ENABLE* the API." \
+        | gum format
+
+    gum input --placeholder "Press the enter key to continue."
+
+    export SA_NAME=devops-toolkit
+
+    export SA="${SA_NAME}@${PROJECT_ID_DB}.iam.gserviceaccount.com"
+
+    gcloud iam service-accounts create $SA_NAME --project $PROJECT_ID_DB
+
+    export ROLE=roles/admin
+
+    gcloud projects add-iam-policy-binding --role $ROLE $PROJECT_ID_DB \
+        --member serviceAccount:$SA
+
+    gcloud iam service-accounts keys create gcp-creds.json \
+        --project $PROJECT_ID_DB --iam-account $SA
 
 else
 

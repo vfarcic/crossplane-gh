@@ -45,6 +45,12 @@ elif [[ "$CLUSTER_TYPE" == "gke" ]]; then
 
 fi
 
+if [[ "$HYPERSCALER" == "google" ]]; then
+
+    gcloud projects delete $PROJECT_ID_DB --quiet
+
+fi
+
 gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 
 gum format '## Open "Settings", click the "Delete this repository" button, and follow the instructions.'
