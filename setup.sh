@@ -11,8 +11,13 @@ rm -f .env
 export KUBECONFIG=$PWD/kubeconfig.yaml
 echo "export KUBECONFIG=$KUBECONFIG" >> .env
 
-echo "## Do you want to create a KinD (local), EKS, GKE, or no cluster (choose none if you already have one)?" | gum format
-CLUSTER_TYPE=$(gum choose "kind" "eks" "gke" "none")
+if [ -z $CLUSTER_TYPE ]; then
+
+    echo "## Do you want to create a KinD (local), EKS, GKE, or no cluster (choose none if you already have one)?" | gum format
+    CLUSTER_TYPE=$(gum choose "kind" "eks" "gke" "none")
+
+fi
+
 echo "export CLUSTER_TYPE=$CLUSTER_TYPE" >> .env
 
 if [[ "$CLUSTER_TYPE" == "kind" ]]; then
@@ -95,7 +100,7 @@ gum spin --spinner dot \
     -- sleep 60
 
 gum spin --spinner dot \
-    --title "Waiting for Crossplane providers to be deployed..." \
+    --title "Waiting for Crossplane providers to be healthy..." \
     -- kubectl wait \
     --for=condition=healthy provider.pkg.crossplane.io --all \
     --timeout 5m
@@ -177,10 +182,3 @@ yq --inplace \
 yq --inplace \
     ".spec.parameters.gitops.user = \"$GITHUB_OWNER\"" \
     examples/repo.yaml
-
-echo "## Get Argo CD token
-1. Open http://argocd.$INGRESS_HOST.nip.io/settings/accounts/admin
-2. Login using username *admin* and password *admin123*
-3. Click the *Generate New* button" \
-    | gum format
-
