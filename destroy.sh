@@ -22,12 +22,14 @@ git push
 
 set -e
 
-COUNTER=$(kubectl get managed --no-headers | grep -v object | wc -l | tr -d '[:space:]')
+COUNTER=$(kubectl get managed --no-headers | grep -v object \
+    | grep -v databaseinstance | grep -v user | wc -l | tr -d '[:space:]')
 
 while [ $COUNTER -ne 0 ]; do
     sleep 10
     echo "Waiting for $COUNTER resources to be deleted"
-    COUNTER=$(kubectl get managed --no-headers | grep -v object | wc -l | tr -d '[:space:]')
+    COUNTER=$(kubectl get managed --no-headers | grep -v object \
+        | grep -v databaseinstance | grep -v user | wc -l | tr -d '[:space:]')
 done
 
 if [[ "$CLUSTER_TYPE" == "kind" ]]; then
