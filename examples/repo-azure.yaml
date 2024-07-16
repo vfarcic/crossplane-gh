@@ -15,7 +15,7 @@ spec:
     db:
       enabled: true
       provider: azure
-      version: "13"
+      version: "11"
     repo:
       user: vfarcic
     gitops:

@@ -152,7 +152,7 @@ kind: Secret
 metadata:
   name: ${oxr.spec.id}-db-password
 data:
-  password: cG9zdGdyZXM=
+  password: T1QrOXZQcDhMdXhoeFVQWVpLSk1kUG1YM04xTzBTd3YzWG5ZVjI0UFZzcz0=
 ---
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: SQLClaim
