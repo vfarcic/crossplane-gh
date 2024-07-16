@@ -9,7 +9,6 @@
     "watchexec@2.1.1",
     "kyverno-chainsaw@0.2.3",
     "crossplane-cli@1.16.0",
-    "gh@2.51.0",
     "viddy@0.4.0",
     "yq-go@4.44.2",
     "upbound@0.31.0",
