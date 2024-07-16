@@ -22,6 +22,12 @@ git push
 
 set -e
 
+sleep 60
+
+kubectl --namespace a-team delete sqlclaim crossplane-gh-demo-db
+
+kubectl --namespace a-team delete appclaim crossplane-gh-demo
+
 COUNTER=$(kubectl get managed --no-headers | grep -v object | grep -v user \
     | wc -l | tr -d '[:space:]')
 
