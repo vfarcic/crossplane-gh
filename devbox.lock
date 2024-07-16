@@ -49,6 +49,134 @@
         }
       }
     },
+    "awscli2@2.17.5": {
+      "last_modified": "2024-07-08T12:07:05Z",
+      "resolved": "github:NixOS/nixpkgs/2e45bfd5361ccdbebe45b68ae2021aea0078eb00#awscli2",
+      "source": "devbox-search",
+      "version": "2.17.5",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/cxkd9wv1pi6kn2n8l3wk8pd35zpchc0a-awscli2-2.17.5",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/zn3jw10hkjwcy91gmwn238qcny30vw73-awscli2-2.17.5-dist"
+            }
+          ],
+          "store_path": "/nix/store/cxkd9wv1pi6kn2n8l3wk8pd35zpchc0a-awscli2-2.17.5"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/7042y9sd6b4z5wdkzl24i0nx6xqws9wv-awscli2-2.17.5",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/vsiv9pbhk01vv9jd5z3w1vgfz7lby2b0-awscli2-2.17.5-dist"
+            }
+          ],
+          "store_path": "/nix/store/7042y9sd6b4z5wdkzl24i0nx6xqws9wv-awscli2-2.17.5"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/kk34lk2lg1askid62qvfvdmf9b7vfy59-awscli2-2.17.5",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/d3bda71kwbaicvvn2m9qwlz6wzm5hxgl-awscli2-2.17.5-dist"
+            }
+          ],
+          "store_path": "/nix/store/kk34lk2lg1askid62qvfvdmf9b7vfy59-awscli2-2.17.5"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/v8wxbb3jzgycwanpd00lrqmm3qr7wi3q-awscli2-2.17.5",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/ggsz70ifhc5k4ddjycm5hsasmr3p3qb1-awscli2-2.17.5-dist"
+            }
+          ],
+          "store_path": "/nix/store/v8wxbb3jzgycwanpd00lrqmm3qr7wi3q-awscli2-2.17.5"
+        }
+      }
+    },
+    "azure-cli@2.62.0": {
+      "last_modified": "2024-07-10T00:27:26Z",
+      "resolved": "github:NixOS/nixpkgs/16e401f01842c5bb2499e78c1fe227f939c0c474#azure-cli",
+      "source": "devbox-search",
+      "version": "2.62.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/rjnzakfwcxsjbr2yiifjcyfy8bh4xlp1-python3.11-azure-cli-2.62.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/ajfaqnlgv6j641izk52i4bbr8nsxy7px-python3.11-azure-cli-2.62.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/rjnzakfwcxsjbr2yiifjcyfy8bh4xlp1-python3.11-azure-cli-2.62.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/5jm29sgs41zm809dpz7bx1cr4f6kl0d2-python3.11-azure-cli-2.62.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/qciw0g7f0bwb6r9j3gia4l2x8qpzws94-python3.11-azure-cli-2.62.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/5jm29sgs41zm809dpz7bx1cr4f6kl0d2-python3.11-azure-cli-2.62.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/rkg1jwv37lbmwbx06njadim5g1ybjf2d-python3.11-azure-cli-2.62.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/qf6scavj3r9hgfss7djsg8fplcl8z6bc-python3.11-azure-cli-2.62.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/rkg1jwv37lbmwbx06njadim5g1ybjf2d-python3.11-azure-cli-2.62.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/ny1ps1wrw8s2qr1ryp1hp6wc9bgan1xf-python3.11-azure-cli-2.62.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/prhghbiigwjzwmgqbx1iscxvndqc0s1w-python3.11-azure-cli-2.62.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/ny1ps1wrw8s2qr1ryp1hp6wc9bgan1xf-python3.11-azure-cli-2.62.0"
+        }
+      }
+    },
     "crossplane-cli@1.16.0": {
       "last_modified": "2024-06-12T20:55:33Z",
       "resolved": "github:NixOS/nixpkgs/a9858885e197f984d92d7fe64e9fff6b2e488d40#crossplane-cli",

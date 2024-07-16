@@ -128,7 +128,7 @@ kubectl apply --filename providers/provider-github-config.yaml
 
 echo "## Which Hyperscaler do you want to use for PostgreSQL (select 'none' to continue without database)?" \
     | gum format
-HYPERSCALER=$(gum choose "aws" "google" "none")
+HYPERSCALER=$(gum choose "aws" "google" "azure" "none")
 echo "export HYPERSCALER=$HYPERSCALER" >> .env
 
 if [[ "$HYPERSCALER" == "aws" ]]; then
@@ -191,6 +191,20 @@ elif [[ "$HYPERSCALER" == "google" ]]; then
         providers/provider-google-config.yaml
 
     kubectl apply --filename providers/provider-google-config.yaml
+
+elif [[ "$HYPERSCALER" == "azure" ]]; then
+
+    az login
+
+    export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+
+    az ad sp create-for-rbac --sdk-auth --role Owner \
+        --scopes /subscriptions/$SUBSCRIPTION_ID | tee azure-creds.json
+
+    kubectl --namespace crossplane-system create secret generic azure-creds \
+        --from-file creds=./azure-creds.json
+
+    kubectl apply --filename providers/provider-azure-config.yaml
 
 else
 
