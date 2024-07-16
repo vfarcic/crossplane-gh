@@ -14,7 +14,7 @@ spec:
       namespace: a-team
     db:
       enabled: true
-      provider: aws
+      provider: azure
       version: "13"
     repo:
       user: vfarcic
