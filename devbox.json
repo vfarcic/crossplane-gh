@@ -19,7 +19,8 @@
     "jq@1.7.1",
     "kubectl-tree@0.4.3",
     "awscli2@2.17.5",
-    "azure-cli@2.62.0"
+    "azure-cli@2.62.0",
+    "zellij@0.40.1"
   ],
   "shell": {
     "init_hook": [
