@@ -22,7 +22,9 @@ git push
 
 set -e
 
-sleep 60
+gum spin --spinner line \
+    --title "Waiting for Argo CD to pick up the changes..." \
+    -- sleep 120
 
 kubectl --namespace a-team delete sqlclaim crossplane-gh-demo-db
 
@@ -46,16 +48,16 @@ elif [[ "$CLUSTER_TYPE" == "gke" ]]; then
 
     rm $KUBECONFIG
 
-    gcloud container clusters delete dot --project $PROJECT_ID \
+    gcloud container clusters delete dot --project ${PROJECT_ID} \
         --zone us-east1-b --quiet
 
-    gcloud projects delete $PROJECT_ID --quiet
+    gcloud projects delete ${PROJECT_ID} --quiet
 
 fi
 
 if [[ "$HYPERSCALER" == "google" ]]; then
 
-    gcloud projects delete $PROJECT_ID_DB --quiet
+    gcloud projects delete ${PROJECT_ID_DB} --quiet
 
 fi
 

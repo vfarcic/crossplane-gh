@@ -23,16 +23,17 @@
     "zellij@0.40.1"
   ],
   "shell": {
-    "init_hook": [
-      "if [ -n \"$ZSH_VERSION\" ]; then export SHELL_NAME=zsh; elif [ -n \"$BASH_VERSION\" ]; then export SHELL_NAME=bash;fi",
-      "source <(just --completions $SHELL_NAME)"
-    ],
+    "init_hook": [],
     "scripts": {
       "cluster-create":  ["just cluster-create"],
       "cluster-destroy": ["just cluster-destroy"],
       "package-publish": ["just package-publish"],
       "test":            ["just test"],
-      "test-watch":      ["just test-watch"]
+      "test-watch":      ["just test-watch"],
+      "dot":             [
+        "eval \"$(teller sh)\"",
+        "zellij"
+      ]
     }
   }
 }
