@@ -1,8 +1,8 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: dot-github-template-2
-  title: dot-github-2
+  name: dot-github-template-vfarcic
+  title: dot-github-template-vfarcic
   description: Create and Manage GitHub repositories
 spec:
   owner: vfarcic/crossplane-gh
@@ -33,7 +33,7 @@ spec:
               default: my-repo.acme.com
             namespace:
               type: string
-              default: a-team # FIXME: array from Kubernetes
+              default: a-team
         db:
           type: object
           properties:

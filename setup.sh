@@ -244,8 +244,25 @@ yq --inplace \
     examples/repo-$HYPERSCALER.yaml
 
 yq --inplace \
-    ".metadata.annotations.\"github.com/project-slug\" = \"$GITHUB_OWNER/xxxcrossplane-gh\"" \
+    ".metadata.annotations.\"github.com/project-slug\" = \"$GITHUB_OWNER/crossplane-gh\"" \
     backstage/catalog-info.yaml
 
 yq --inplace ".metadata.name = \"dot-github-$GITHUB_OWNER\"" \
     backstage/catalog-info.yaml
+
+yq --inplace ".metadata.name = \"dot-github-template-$GITHUB_OWNER\"" \
+    backstage/catalog-template.yaml
+
+yq --inplace ".metadata.title = \"dot-github-template-$GITHUB_OWNER\"" \
+    backstage/catalog-template.yaml
+
+yq --inplace ".spec.owner = \"$GITHUB_OWNER/crossplane-gh\"" \
+    backstage/catalog-template.yaml
+
+yq --inplace \
+    ".spec.parameters[0].properties.repo.properties.user.default = \"$GITHUB_OWNER\"" \
+    backstage/catalog-template.yaml
+
+yq --inplace \
+    ".spec.parameters[0].properties.gitops.properties.user.default = \"$GITHUB_OWNER\"" \
+    backstage/catalog-template.yaml
