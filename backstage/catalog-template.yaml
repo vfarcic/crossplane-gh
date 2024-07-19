@@ -112,4 +112,3 @@ spec:
         branchName: init-${{ parameters.name }}
         title: "Init: ${{ parameters.name }} app manifest [skip ci]"
         description: This pull request creates or updates the ${{ parameters.name }} app manifest [skip ci]
-

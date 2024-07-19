@@ -23,8 +23,8 @@ git push
 set -e
 
 gum spin --spinner line \
-    --title "Waiting for Argo CD to pick up the changes..." \
-    -- sleep 120
+    --title "Waiting for Argo CD to pick up the changes (90 sec.)..." \
+    -- sleep 90
 
 kubectl --namespace a-team delete sqlclaim crossplane-gh-demo-db
 
@@ -46,7 +46,7 @@ if [[ "$CLUSTER_TYPE" == "kind" ]]; then
 
 elif [[ "$CLUSTER_TYPE" == "aks" ]]; then
 
-    az group create --name $RESOURCE_GROUP --location $LOCATION
+    az group create --name $RESOURCE_GROUP --location eastus
 
 elif [[ "$CLUSTER_TYPE" == "gke" ]]; then
 
@@ -56,6 +56,10 @@ elif [[ "$CLUSTER_TYPE" == "gke" ]]; then
         --zone us-east1-b --quiet
 
     gcloud projects delete ${PROJECT_ID} --quiet
+
+elif [[ "$CLUSTER_TYPE" == "eks" ]]; then
+
+    eksctl delete cluster --config-file eksctl.yaml
 
 fi
 
