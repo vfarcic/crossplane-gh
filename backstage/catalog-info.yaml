@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: dot-github
-  description: Silly description
+  description: Silly description of dot-github
   annotations:
     github.com/project-slug: vfarcic/crossplane-gh
     backstage.io/kubernetes-id: dot

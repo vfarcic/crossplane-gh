@@ -126,9 +126,14 @@ stringData:
 
 kubectl apply --filename providers/provider-github-config.yaml
 
-echo "## Which Hyperscaler do you want to use for PostgreSQL (select 'none' to continue without database)?" \
-    | gum format
-HYPERSCALER=$(gum choose "aws" "google" "azure" "none")
+if [ -z $HYPERSCALER ]; then
+
+    echo "## Which Hyperscaler do you want to use for PostgreSQL (select 'none' to continue without database)?" \
+        | gum format
+    HYPERSCALER=$(gum choose "aws" "google" "azure" "none")
+
+fi
+
 echo "export HYPERSCALER=$HYPERSCALER" >> .env
 
 if [[ "$HYPERSCALER" == "aws" ]]; then
