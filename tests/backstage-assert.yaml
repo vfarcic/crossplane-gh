@@ -41,7 +41,7 @@ spec:
         annotations:
           github.com/project-slug: my-user/my-repo
           backstage.io/kubernetes-id: dot
-          backstage.io/kubernetes-namespace: git-repos
+          backstage.io/kubernetes-namespace: a-team
           backstage.io/kubernetes-label-selector: app.kubernetes.io/name=my-repo
       spec:
         type: backend
