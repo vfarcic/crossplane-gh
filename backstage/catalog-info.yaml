@@ -7,7 +7,7 @@ metadata:
     github.com/project-slug: vfarcic/crossplane-gh
     backstage.io/kubernetes-id: dot
     backstage.io/kubernetes-namespace: git-repos
-    backstage.io/kubernetes-label-selector: app.kubernetes.io/name=silly-demo
+    backstage.io/kubernetes-label-selector: app.kubernetes.io/name=dot-github
 spec:
   type: infra
   lifecycle: production
