@@ -242,3 +242,10 @@ yq --inplace \
 yq --inplace \
     ".spec.parameters.gitops.user = \"$GITHUB_OWNER\"" \
     examples/repo-$HYPERSCALER.yaml
+
+yq --inplace \
+    ".metadata.annotations.\"github.com/project-slug\" = \"$GITHUB_OWNER/xxxcrossplane-gh\"" \
+    backstage/catalog-info.yaml
+
+yq --inplace ".metadata.name = \"dot-github-$GITHUB_OWNER\"" \
+    backstage/catalog-info.yaml
