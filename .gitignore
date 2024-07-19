@@ -3,3 +3,4 @@
 /gke_gcloud_auth_plugin_cache
 /kubeconfig.yaml
 /azure-creds.json
+/gcp-creds.json
