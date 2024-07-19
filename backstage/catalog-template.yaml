@@ -112,10 +112,3 @@ spec:
         branchName: init-${{ parameters.name }}
         title: "Init: ${{ parameters.name }} app manifest"
         description: This pull request creates or updates the ${{ parameters.name }} app manifest [skip ci]
-    - action: github:actions:dispatch
-      id: trigger-build
-      name: GitOps
-      input:
-        repoUrl: github.com?repo=${{ parameters.name }}&owner=${{ parameters.repo.user }}
-        workflowId: gitops.yaml
-        branchOrTagName: main
