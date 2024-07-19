@@ -4,5 +4,5 @@ kind: Configuration
 metadata:
   name: devops-toolkit-dot-application
 spec:
-  package: xpkg.upbound.io/devops-toolkit/dot-application:v0.6.6
+  package: xpkg.upbound.io/devops-toolkit/dot-application:v0.6.7
 ---
