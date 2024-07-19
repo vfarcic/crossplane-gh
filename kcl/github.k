@@ -70,7 +70,7 @@ items = [
 2. Open https://github.com/${oxr.spec.parameters.repo.user}/${oxr.spec.id}/settings/secrets/actions and add `PAT_TOKEN` with the GitHub token to `Repository secrets`.
 3. Review, modify (optional), merge, enjoy.
 """
-        if oxr.spec.parameters?.gitops?.enabled and not oxr.spec.parameters?.backstage?.enabled:
+        if oxr.spec.parameters?.gitops?.enabled:
             _body = _body + """\
 4. Execute the `gitops` workflow to include the app into the GitOps repository.
 """
