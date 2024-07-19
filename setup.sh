@@ -14,7 +14,7 @@ echo "export KUBECONFIG=$KUBECONFIG" >> .env
 if [ -z $CLUSTER_TYPE ]; then
 
     echo "## Do you want to create a KinD (local), EKS, GKE, or no cluster (choose none if you already have one)?" | gum format
-    CLUSTER_TYPE=$(gum choose "kind" "eks" "gke" "none")
+    CLUSTER_TYPE=$(gum choose "kind" "eks" "gke" "aks" "none")
 
 fi
 
@@ -81,6 +81,24 @@ elif [[ "$CLUSTER_TYPE" == "gke" ]]; then
     yq --inplace \
         ".server.ingress.hostname = \"argocd.$INGRESS_HOST.nip.io\"" \
         argocd-values.yaml
+
+elif [[ "$CLUSTER_TYPE" == "aks" ]]; then
+
+    az login
+
+    RESOURCE_GROUP=dot-$(date +%Y%m%d%H%M%S)
+    echo "export RESOURCE_GROUP=$RESOURCE_GROUP" >> .env
+
+    export LOCATION=eastus
+
+    az group create --name $RESOURCE_GROUP --location $LOCATION
+
+    az aks create --resource-group $RESOURCE_GROUP --name dot \
+        --node-count 3 --node-vm-size Standard_B2ms \
+        --enable-managed-identity --generate-ssh-keys --yes
+
+    az aks get-credentials --resource-group $RESOURCE_GROUP \
+        --name dot --file $KUBECONFIG
 
 fi
 
@@ -199,7 +217,11 @@ elif [[ "$HYPERSCALER" == "google" ]]; then
 
 elif [[ "$HYPERSCALER" == "azure" ]]; then
 
-    az login
+    AZURE_TENANT_ID=$(gum input --placeholder "Azure Tenant ID" \
+        --value "$AZURE_TENANT_ID")
+    echo "export AZURE_TENANT_ID=$AZURE_TENANT_ID" >> .env
+
+    az login --tenant $AZURE_TENANT_ID
 
     export SUBSCRIPTION_ID=$(az account show --query id -o tsv)
 

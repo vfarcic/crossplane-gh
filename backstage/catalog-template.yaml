@@ -116,6 +116,6 @@ spec:
       id: trigger-build
       name: GitOps
       input:
-        repoUrl: github.com?repo=${{ parameters.gitops.repo }}&owner=${{ parameters.gitops.user }}
+        repoUrl: github.com?repo=${{ parameters.name }}&owner=${{ parameters.repo.user }}
         workflowId: gitops.yaml
         branchOrTagName: main

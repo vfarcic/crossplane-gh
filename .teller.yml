@@ -11,3 +11,4 @@ providers:
           github-user: GITHUB_OWNER
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          azure-tenant: AZURE_TENANT_ID
