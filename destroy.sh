@@ -44,6 +44,10 @@ if [[ "$CLUSTER_TYPE" == "kind" ]]; then
     
     kind delete cluster
 
+elif [[ "$CLUSTER_TYPE" == "aks" ]]; then
+
+    az group create --name $RESOURCE_GROUP --location $LOCATION
+
 elif [[ "$CLUSTER_TYPE" == "gke" ]]; then
 
     rm $KUBECONFIG
