@@ -72,3 +72,9 @@ fi
 gh repo view $GITHUB_OWNER/crossplane-gh-demo --web
 
 gum format '## Open "Settings", click the "Delete this repository" button, and follow the instructions.'
+
+gum input --placeholder "Press the enter key to continue."
+
+gh repo view $GITHUB_OWNER/crossplane-gh --web
+
+gum format '## Open "Settings", click the "Delete this repository" button, and follow the instructions.'

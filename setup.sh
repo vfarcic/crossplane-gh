@@ -183,7 +183,7 @@ elif [[ "$HYPERSCALER" == "google" ]]; then
 
     gcloud projects create ${PROJECT_ID_DB}
 
-    echo "## Open https://console.cloud.google.com/billing/enable?project=$PROJECT_ID_DB  in a browser and *ENABLE* the API." \
+    echo "## Open https://console.cloud.google.com/billing/enable?project=$PROJECT_ID_DB  in a browser and select billing." \
         | gum format
 
     gum input --placeholder "Press the enter key to continue."
@@ -272,6 +272,9 @@ yq --inplace \
 yq --inplace ".metadata.name = \"dot-github-$GITHUB_OWNER\"" \
     backstage/catalog-info.yaml
 
+yq --inplace ".spec.owner = \"$GITHUB_OWNER/crossplane-gh\"" \
+    backstage/catalog-info.yaml
+
 yq --inplace ".metadata.name = \"dot-github-template-$GITHUB_OWNER\"" \
     backstage/catalog-template.yaml
 
@@ -288,3 +291,9 @@ yq --inplace \
 yq --inplace \
     ".spec.parameters[0].properties.gitops.properties.user.default = \"$GITHUB_OWNER\"" \
     backstage/catalog-template.yaml
+
+git add .
+
+git commit -m "Initial commit"
+
+git push
