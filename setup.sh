@@ -232,11 +232,6 @@ elif [[ "$HYPERSCALER" == "azure" ]]; then
         --from-file creds=./azure-creds.json
 
     kubectl apply --filename providers/provider-azure-config.yaml
-
-else
-
-    yq --inplace ".spec.parameters.db.enabled = false" \
-        examples/repo.yaml
     
 fi
 
