@@ -19,6 +19,7 @@ spec:
     commitMessage: "Crossplane rocks"
     content: |
       /tmp
+      /devbox.lock
     file: .gitignore
     repositoryRef:
       name: crossplane-github-demo

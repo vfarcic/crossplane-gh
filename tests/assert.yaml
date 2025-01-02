@@ -313,6 +313,7 @@ spec:
     commitMessage: "Crossplane rocks [skip ci]"
     content: |
       /tmp
+      /devbox.lock
     file: .gitignore
     repositorySelector:
       matchControllerRef: true

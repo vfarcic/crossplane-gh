@@ -84,6 +84,7 @@ Review, merge, enjoy.
         _file = ".gitignore"
         _content = """\
 /tmp
+/devbox.lock
 """
         _branch = False
     }
