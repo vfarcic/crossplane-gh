@@ -102,6 +102,7 @@ spec:
                   _file = ".gitignore"
                   _content = """\
           /tmp
+          /devbox.lock
           """
                   _branch = False
               }
